@@ -8,11 +8,11 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.io.github.paulodsoliveira</groupId>
-	<artifactId>livraria-api</artifactId>
+	<groupId>io.github.paulosdoliveira</groupId>
+	<artifactId>livrariaapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>livraria-api</name>
-	<description>Api de livraria </description>
+	<name>livrariaapi</name>
+	<description>Api spring de livros</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>23</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

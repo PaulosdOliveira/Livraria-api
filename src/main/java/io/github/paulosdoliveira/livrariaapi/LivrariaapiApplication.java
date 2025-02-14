@@ -1,13 +1,13 @@
-package com.io.github.paulodsoliveira.livraria_api;
+package io.github.paulosdoliveira.livrariaapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LivrariaApiApplication {
+public class LivrariaapiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LivrariaApiApplication.class, args);
+		SpringApplication.run(LivrariaapiApplication.class, args);
 	}
 
 }
