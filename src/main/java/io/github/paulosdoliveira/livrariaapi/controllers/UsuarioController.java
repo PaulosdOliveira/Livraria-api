@@ -31,8 +31,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public void logar(@RequestBody @Valid LoginUsuariDTO dados){
-         service.login(dados);
+    public ResponseEntity logar(@RequestBody @Valid LoginUsuariDTO dados) {
+        var token = service.login(dados);
+        if (token == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.ok(token);
     }
 
 }

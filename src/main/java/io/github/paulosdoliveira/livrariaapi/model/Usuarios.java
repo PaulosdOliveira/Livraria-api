@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table
 public class Usuarios {
 
     @Id
@@ -24,10 +26,9 @@ public class Usuarios {
     @Enumerated(EnumType.STRING)
     private PerfilUsuario perfil;
 
-    @JoinColumn
-    @ManyToMany
-    private List<Livro> livrosComprados;
 
+    /*@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Compras> livrosComprados;*/
 
 
     public UUID getId() {
@@ -70,11 +71,11 @@ public class Usuarios {
         this.perfil = perfil;
     }
 
-    public List<Livro> getLivrosComprados() {
+    public List<Compras> getLivrosComprados() {
         return livrosComprados;
     }
 
-    public void setLivrosComprados(List<Livro> livrosComprados) {
+    public void setLivrosComprados(List<Compras> livrosComprados) {
         this.livrosComprados = livrosComprados;
     }
 }

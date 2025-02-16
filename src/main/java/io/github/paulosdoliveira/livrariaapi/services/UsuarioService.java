@@ -2,8 +2,10 @@ package io.github.paulosdoliveira.livrariaapi.services;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.usuario.CadastroUsuarioDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.usuario.LoginUsuariDTO;
+import io.github.paulosdoliveira.livrariaapi.jwt.JwtService;
 import io.github.paulosdoliveira.livrariaapi.mappers.UsuarioMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
+import io.github.paulosdoliveira.livrariaapi.model.token.AccessToken;
 import io.github.paulosdoliveira.livrariaapi.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,25 +24,35 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public Usuarios login(LoginUsuariDTO dados) {
+    @Autowired
+    private JwtService jwtService;
+
+    public AccessToken login(LoginUsuariDTO dados) {
         var usuario = repository.findByEmail(dados.getEmail());
         if (usuario == null) throw new UsernameNotFoundException("Usuário não encontrado");
         String senhaDigitada = dados.getSenha();
         String senhaSalva = usuario.getSenha();
-        if (encoder.matches(senhaDigitada, senhaSalva)) {
-
+        boolean senhasBatem = encoder.matches(senhaDigitada, senhaSalva);
+        if (senhasBatem) {
+            AccessToken token = jwtService.gerarToken(usuario);
+            return token;
         }
-
-        throw new UsernameNotFoundException("Usuário não encontrado");
+        throw new UsernameNotFoundException("Email ou senha incorretos");
     }
 
-    public void cadastrar(CadastroUsuarioDTO dados){
+    public void cadastrar(CadastroUsuarioDTO dados) {
         var usuario = mapper.CadatroParaEntidade(dados);
+        String senhaCryptografada = encoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCryptografada);
         repository.save(usuario);
     }
 
 
-    public boolean existsByEmail(String email){
+    public boolean existsByEmail(String email) {
         return repository.existsByEmail(email);
+    }
+
+    public Usuarios findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }
