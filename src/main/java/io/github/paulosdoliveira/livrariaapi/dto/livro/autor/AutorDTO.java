@@ -1,46 +1,21 @@
-package io.github.paulosdoliveira.livrariaapi.model;
-
-import jakarta.persistence.*;
+package io.github.paulosdoliveira.livrariaapi.dto.livro.autor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
+public class AutorDTO {
 
-@Entity
-@Table
-public class Autor {
-
-    public Autor() {
-
-    }
-
-    public Autor(String nome) {
-        this.nome = nome;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    @Column(nullable = false, length = 50)
     private String nome;
-
-    @Column(length = 90)
     private String descricaoBreve;
-
-    @Column(nullable = false)
     private LocalDate dataNascimento;
+    private String UrlFoto;
 
-    private String  UrlFoto;
-
-
-
-    public UUID getId() {
-        return id;
+    public AutorDTO() {
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public AutorDTO(String nome, String descricaoBreve, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.descricaoBreve = descricaoBreve;
+        this.dataNascimento = dataNascimento;
     }
 
     public String getNome() {

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: livrariaapi
+  datasource:
+    url: jdbc:postgresql://localhost:5432/loja
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
