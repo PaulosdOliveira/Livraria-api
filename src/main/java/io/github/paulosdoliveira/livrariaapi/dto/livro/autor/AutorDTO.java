@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class AutorDTO {
 
     private String nome;
-    private String descricaoBreve;
+    private String breveDescricao;
     private LocalDate dataNascimento;
     private String UrlFoto;
 
@@ -14,7 +14,7 @@ public class AutorDTO {
 
     public AutorDTO(String nome, String descricaoBreve, LocalDate dataNascimento) {
         this.nome = nome;
-        this.descricaoBreve = descricaoBreve;
+        this.breveDescricao = descricaoBreve;
         this.dataNascimento = dataNascimento;
     }
 
@@ -26,12 +26,12 @@ public class AutorDTO {
         this.nome = nome;
     }
 
-    public String getDescricaoBreve() {
-        return descricaoBreve;
+    public String getBreveDescricao() {
+        return breveDescricao;
     }
 
-    public void setDescricaoBreve(String descricaoBreve) {
-        this.descricaoBreve = descricaoBreve;
+    public void setBreveDescricao(String breveDescricao) {
+        this.breveDescricao = breveDescricao;
     }
 
     public LocalDate getDataNascimento() {

@@ -5,6 +5,7 @@ import io.github.paulosdoliveira.livrariaapi.mappers.AutorMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.model.Foto;
 import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
+import io.github.paulosdoliveira.livrariaapi.validations.AutorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -28,10 +29,14 @@ public class AutorService {
     @Autowired
     private AutorMapper mapper;
 
+    @Autowired
+    private AutorValidator validator;
+
     private static String URLFOTO = "http://localhost:8080/autores/foto?id=";
 
     @Transactional
     public void cadastraAutor(AutorDTO dados, MultipartFile arquivo) {
+        validator.validar(dados);
         var autor = mapper.toEntity(dados);
         var autorSalvo = repository.save(autor);
         if (arquivo == null) {

@@ -26,6 +26,7 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    @Autowired
     private LivroValidator validator;
 
     public void salvarLivro(LivroCadastroDTO dto) {

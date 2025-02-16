@@ -11,7 +11,7 @@ public class AutorMapper {
         var autor = new Autor();
         autor.setNome(dto.getNome());
         autor.setDataNascimento(dto.getDataNascimento());
-        autor.setDescricaoBreve(dto.getDescricaoBreve());
+        autor.setDescricaoBreve(dto.getBreveDescricao());
         autor.setUrlFoto(dto.getUrlFoto());
         return autor;
     }
@@ -20,7 +20,7 @@ public class AutorMapper {
         var dto = new AutorDTO();
         dto.setNome(entity.getNome());
         dto.setDataNascimento(entity.getDataNascimento());
-        dto.setDescricaoBreve(entity.getDescricaoBreve());
+        dto.setBreveDescricao(entity.getDescricaoBreve());
         dto.setUrlFoto(entity.getUrlFoto());
         return dto;
     }
