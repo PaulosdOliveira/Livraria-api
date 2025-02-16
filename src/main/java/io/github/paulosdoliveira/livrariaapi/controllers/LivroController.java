@@ -3,6 +3,7 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.services.LivroService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ public class LivroController {
     private LivroService service;
 
     @PostMapping
-    public ResponseEntity cadastrarLivro(@RequestBody LivroCadastroDTO dados) {
+    public ResponseEntity cadastrarLivro(@RequestBody @Valid LivroCadastroDTO dados) {
         service.salvarLivro(dados);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

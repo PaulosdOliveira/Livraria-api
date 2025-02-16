@@ -13,13 +13,13 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false , unique = true, length = 40)
+    @Column(nullable = false, unique = true, length = 40)
     private String titulo;
 
-    @Column(nullable = false , length = 150)
+    @Column(nullable = false, length = 150)
     private String descricao;
 
-    @Column(nullable = false , unique = true)
+    @Column(nullable = false, unique = true)
     private String ISBN;
 
     @Column(nullable = false)
@@ -34,6 +34,7 @@ public class Livro {
     public Livro(String titulo) {
         this.titulo = titulo;
     }
+
     public Livro() {
 
     }

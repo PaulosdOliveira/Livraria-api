@@ -1,15 +1,28 @@
 package io.github.paulosdoliveira.livrariaapi.dto.livro;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.ISBN;
+
 import java.util.Date;
 import java.util.UUID;
 
 
 public class LivroCadastroDTO {
 
+    @NotBlank(message = "Campo obrigatório")
     private String titulo;
+
+    @NotBlank(message = "Campo obrigatório")
     private String descricao;
+
+    @NotBlank(message = "Campo obrigatório")
     private String ISBN;
+
+    @NotNull (message = "Campo obrigatório")
     private Date dataPublicacao;
+
+    @NotBlank(message = "Campo obrigatório")
     private UUID idAutor;
 
 

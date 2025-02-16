@@ -5,6 +5,7 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
+import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -18,14 +19,6 @@ import java.util.UUID;
 @Service
 public class LivroService {
 
-    public LivroService(LivroMapper mapper, LivroRepository repository) {
-        this.mapper = mapper;
-        this.repository = repository;
-    }
-
-    public LivroService() {
-
-    }
 
     @Autowired
     private LivroMapper mapper;
@@ -33,7 +26,10 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    private LivroValidator validator;
+
     public void salvarLivro(LivroCadastroDTO dto) {
+        validator.validar(dto);
         var livro = mapper.toEntity(dto);
         livro.setAtivo(true);
         repository.save(livro);
@@ -63,5 +59,13 @@ public class LivroService {
         });
 
         return lista;
+    }
+
+    public boolean existsByIsbn(String isbn) {
+        return repository.existsByISBN(isbn);
+    }
+
+    public boolean existsByTitulo(String titulo) {
+        return repository.existsByISBN(titulo);
     }
 }
