@@ -26,7 +26,7 @@ public class Autor {
     private String nome;
 
     @Column(length = 90)
-    private String descricaoBreve;
+    private String breveDescricao;
 
     @Column(nullable = false)
     private LocalDate dataNascimento;
@@ -51,12 +51,12 @@ public class Autor {
         this.nome = nome;
     }
 
-    public String getDescricaoBreve() {
-        return descricaoBreve;
+    public String getBreveDescricao() {
+        return breveDescricao;
     }
 
-    public void setDescricaoBreve(String descricaoBreve) {
-        this.descricaoBreve = descricaoBreve;
+    public void setBreveDescricao(String breveDescricao) {
+        this.breveDescricao = breveDescricao;
     }
 
     public LocalDate getDataNascimento() {

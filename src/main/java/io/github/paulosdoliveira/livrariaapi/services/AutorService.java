@@ -61,13 +61,8 @@ public class AutorService {
 
     }
 
-    public List<Autor> buscarAutores(String nome) {
-        var autor = new Autor(nome);
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnoreCase()
-                .withIgnoreNullValues();
-        Example<Autor> autorExample = Example.of(autor, matcher);
-        return repository.findAll(autorExample);
+    public List<Autor> consultaFiltrada(String nome, Integer ano) {
+        return repository.buscaFiltrada(nome, ano);
     }
 
     public List<Autor> buscaAleatoria() {
