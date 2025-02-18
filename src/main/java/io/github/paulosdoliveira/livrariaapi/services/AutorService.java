@@ -7,8 +7,6 @@ import io.github.paulosdoliveira.livrariaapi.model.Foto;
 import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.AutorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +30,8 @@ public class AutorService {
     @Autowired
     private AutorValidator validator;
 
-    private static String URLFOTO = "http://localhost:8080/autores/foto?id=";
+    private  String URLBASEFOTO = "http://localhost:8080/autores/foto?id=";
+    private  String URLFOTOPADRAO = URLBASEFOTO + "1d80a3d0-e09b-415b-a211-d068bf419620";
 
     @Transactional
     public void cadastraAutor(AutorDTO dados, MultipartFile arquivo) {
@@ -40,11 +39,11 @@ public class AutorService {
         var autor = mapper.toEntity(dados);
         var autorSalvo = repository.save(autor);
         if (arquivo == null) {
-            autorSalvo.setUrlFoto("http://localhost:8080/autores/foto?id=1d80a3d0-e09b-415b-a211-d068bf419620");
+            autorSalvo.setUrlFoto(URLFOTOPADRAO);
         } else {
             try {
                 fotoService.salvarFoto(arquivo, autorSalvo);
-                String urlFoto = URLFOTO + autorSalvo.getId();
+                String urlFoto = URLBASEFOTO + autorSalvo.getId();
                 autorSalvo.setUrlFoto(urlFoto);
             } catch (IOException e) {
                 System.out.println(e);
@@ -61,6 +60,25 @@ public class AutorService {
 
     }
 
+    @Transactional
+    public void mudarFoto(MultipartFile arquivo, UUID idAutor) throws IOException {
+        var autor = buscarPorId(idAutor);
+        if (autor != null) {
+            String urlFoto = autor.getUrlFoto();
+            if (urlFoto.equals(URLFOTOPADRAO)) {
+                System.out.println("/**********************************************************");
+                fotoService.salvarFoto(arquivo, autor);
+                autor.setUrlFoto(URLBASEFOTO + autor.getId());
+            } else {
+                System.out.println("/---------------------------------------------------------");
+                Foto fotoAtual = fotoService.buscarFoto(idAutor);
+                fotoService.mudarFotoAtual(arquivo, fotoAtual);
+            }
+        }
+
+
+    }
+
     public List<Autor> consultaFiltrada(String nome, Integer ano) {
         return repository.buscaFiltrada(nome, ano);
     }
@@ -74,11 +92,9 @@ public class AutorService {
         return repository.findById(id).orElse(null);
     }
 
-    public Foto buscarFoto(Autor autor) {
-        return fotoService.buscarFoto(autor);
+    public Foto buscarFoto(UUID idAutor) {
+        return fotoService.buscarFoto(idAutor);
     }
 
-    public void mudarFoto(MultipartFile arquivo, UUID idFoto) throws IOException {
-        fotoService.mudarFoto(arquivo, idFoto);
-    }
+
 }

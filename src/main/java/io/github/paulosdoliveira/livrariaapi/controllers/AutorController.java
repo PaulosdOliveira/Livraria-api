@@ -3,6 +3,7 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
+import io.github.paulosdoliveira.livrariaapi.services.FotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ public class AutorController {
 
     @Autowired
     private AutorService service;
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,8 +43,7 @@ public class AutorController {
 
     @GetMapping("/foto")
     public ResponseEntity<byte[]> buscarFoto(@RequestParam(value = "id") UUID id) {
-        var autor = service.buscarPorId(id);
-        var foto = service.buscarFoto(autor);
+        var foto = service.buscarFoto(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(foto.getExtesao().getMediaType());
         headers.setContentLength(foto.getTamanho());
@@ -51,11 +52,10 @@ public class AutorController {
     }
 
     @PutMapping
-    public void mudarFoto(@RequestParam MultipartFile arquivo, @RequestParam String urlFoto) throws IOException {
-        String[] urlDividida = urlFoto.split("=");
-        String idFotoStr = urlDividida[1];
-        UUID idFoto = UUID.fromString(idFotoStr);
-        service.mudarFoto(arquivo, idFoto);
+    public void mudarFoto(@RequestParam(name = "arquivo") MultipartFile arquivo, @RequestParam(name = "idAutor") UUID idAutor) throws IOException {
+        if (arquivo != null || idAutor != null) {
+            service.mudarFoto(arquivo, idAutor);
+        }
     }
 
 

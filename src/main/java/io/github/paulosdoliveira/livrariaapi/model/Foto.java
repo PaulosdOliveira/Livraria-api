@@ -41,13 +41,6 @@ public class Foto {
         this.tamanho = tamanho;
     }
 
-    public Foto( UUID id,byte[] arquivo, String nome, ExtensaoFoto extesao, Long tamanho) {
-        this.id = id;
-        this.arquivo = arquivo;
-        this.nome = nome;
-        this.extesao = extesao;
-        this.tamanho = tamanho;
-    }
 
     public UUID getId() {
         return id;

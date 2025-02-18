@@ -21,7 +21,7 @@ public interface AutorRepository extends JpaRepository<Autor, UUID>, JpaSpecific
         if (StringUtils.hasText(nome)) {
             specs = specs.and(nomeLike(nome));
         }
-        if(ano != null){
+        if(ano != null && ano.toString().length() == 4){
             specs = specs.and(anoEqual(ano));
         }
         return findAll(specs);
