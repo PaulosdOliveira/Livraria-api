@@ -3,7 +3,7 @@ package io.github.paulosdoliveira.livrariaapi.model;
 import io.github.paulosdoliveira.livrariaapi.model.enums.PerfilUsuario;
 import jakarta.persistence.*;
 
-import java.util.List;
+
 import java.util.UUID;
 
 @Entity
@@ -25,10 +25,6 @@ public class Usuarios {
 
     @Enumerated(EnumType.STRING)
     private PerfilUsuario perfil;
-
-
-    /*@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Compras> livrosComprados;*/
 
 
     public UUID getId() {
@@ -71,11 +67,9 @@ public class Usuarios {
         this.perfil = perfil;
     }
 
-    public List<Compras> getLivrosComprados() {
-        return livrosComprados;
+    @Override
+    public String toString() {
+        return this.id.toString();
     }
 
-    public void setLivrosComprados(List<Compras> livrosComprados) {
-        this.livrosComprados = livrosComprados;
-    }
 }

@@ -4,15 +4,18 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.List;
+import static io.github.paulosdoliveira.livrariaapi.repositories.specification.LivroSpecs.*;
+
 import java.util.UUID;
 
 
@@ -29,13 +32,15 @@ public class LivroService {
     @Autowired
     private LivroValidator validator;
 
+
+    //Salvar novo livro
     public void salvarLivro(LivroCadastroDTO dto) {
         validator.validar(dto);
         var livro = mapper.toEntity(dto);
-        livro.setAtivo(true);
         repository.save(livro);
     }
 
+    // Ocultar livro setando ativo para falso
     @Transactional
     public boolean deletarLivro(UUID id) {
         var possivelLivro = repository.findById(id);
@@ -45,22 +50,30 @@ public class LivroService {
         return true;
     }
 
-    public Page<List<LivroCartaoDTO>> buscarLivros(String titulo) {
-        var livro = new Livro(titulo);
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Livro> livroExample = Example.of(livro, matcher);
+
+    public Page<LivroCartaoDTO> buscaComFiltro(String titulo, GeneroLivro genero, Integer ano) {
+
+        Specification<Livro> specs = conjunction();
+
+        if (StringUtils.hasText(titulo)) {
+            specs = specs.and(tituloLike(titulo));
+        }
+        if (genero != null) {
+            specs = specs.and(generoIqual(genero));
+        }
+        if (ano != null) {
+            specs = specs.and(anoEqual(ano));
+        }
+
+        var consulta = repository.findAll(specs);
+        var listaDTO = consulta.stream().map(mapper::toCartao).toList();
         Pageable page = PageRequest.of(0, 12);
-        var resultado = repository.findAll(livroExample, page);
-
-
-        Page<List<LivroCartaoDTO>> lista = resultado.map(pagina -> {
-            return Collections.singletonList(mapper.toCartao(pagina));
-        });
-
-        return lista;
+        Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
+        return pagina;
     }
+
+
+
 
     public boolean existsByIsbn(String isbn) {
         return repository.existsByISBN(isbn);
@@ -68,5 +81,9 @@ public class LivroService {
 
     public boolean existsByTitulo(String titulo) {
         return repository.existsByISBN(titulo);
+    }
+
+    public Livro buscarPorId(UUID id) {
+        return repository.findById(id).orElse(null);
     }
 }

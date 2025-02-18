@@ -7,14 +7,13 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarException;
+
 
 @Service
 public class JwtService {
@@ -24,7 +23,6 @@ public class JwtService {
 
     public AccessToken gerarToken(Usuarios usuario) {
         SecretKey secretKey = secretKeyGenerator.getKey();
-
         var token = Jwts.builder()
                 .signWith(secretKey)
                 .subject(usuario.getEmail())

@@ -1,19 +1,22 @@
 package io.github.paulosdoliveira.livrariaapi.dto.livro;
 
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
+import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
+import jakarta.persistence.GeneratedValue;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 public class LivroCartaoDTO {
     private String titulo;
-    private Date dataPublicacao;
-    private Autor autor;
+    private GeneroLivro genero;
+    private LocalDate dataPublicacao;
+    private String nomeAutor;
 
-    public LivroCartaoDTO(String titulo, Date dataPublicacao, Autor autor) {
+    public LivroCartaoDTO(String titulo, LocalDate dataPublicacao, String nomeAutor) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
-        this.autor = autor;
+        this.nomeAutor = nomeAutor;
     }
 
     public LivroCartaoDTO() {
@@ -28,19 +31,27 @@ public class LivroCartaoDTO {
         this.titulo = titulo;
     }
 
-    public Date getDataPublicacao() {
+    public GeneroLivro getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroLivro genero) {
+        this.genero = genero;
+    }
+
+    public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }
 
-    public void setDataPublicacao(Date dataPublicacao) {
+    public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public String getNomeAutor() {
+        return nomeAutor;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setNomeAutor(String nomeAutor) {
+        this.nomeAutor = nomeAutor;
     }
 }

@@ -16,27 +16,21 @@ public class LivroMapper {
     public Livro toEntity(LivroCadastroDTO dto) {
         var livro = new Livro();
         livro.setTitulo(dto.getTitulo());
+        livro.setGenero(dto.getGenero());
         livro.setDescricao(dto.getDescricao());
         livro.setISBN(dto.getISBN());
+        livro.setAtivo(true);
         livro.setAutor(autorService.buscarPorId(dto.getIdAutor()));
         livro.setDataPublicacao(dto.getDataPublicacao());
         return livro;
     }
 
-    public LivroCadastroDTO todto(Livro livro) {
-        var dto = new LivroCadastroDTO();
-        dto.setTitulo(livro.getTitulo());
-        dto.setDescricao(livro.getDescricao());
-        dto.setISBN(livro.getISBN());
-        dto.setIdAutor(livro.getAutor().getId());
-        dto.setDataPublicacao(livro.getDataPublicacao());
-        return dto;
-    }
 
     public LivroCartaoDTO toCartao(Livro livro) {
         var cartaoDTO = new LivroCartaoDTO();
         cartaoDTO.setTitulo(livro.getTitulo());
-        cartaoDTO.setAutor(livro.getAutor());
+        cartaoDTO.setGenero(livro.getGenero());
+        cartaoDTO.setNomeAutor(livro.getAutor().getNome());
         cartaoDTO.setDataPublicacao(livro.getDataPublicacao());
         return cartaoDTO;
     }

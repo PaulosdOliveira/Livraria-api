@@ -19,4 +19,36 @@ public class Compras {
     @JoinColumn
     @OneToOne
     private Livro livro;
+
+    public Compras() {
+    }
+
+    public Compras( Usuarios usuario, Livro livro) {
+        this.usuario = usuario;
+        this.livro = livro;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
 }

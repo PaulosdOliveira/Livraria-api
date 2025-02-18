@@ -1,8 +1,8 @@
 package io.github.paulosdoliveira.livrariaapi.model;
 
+import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.persistence.*;
-
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -16,6 +16,10 @@ public class Livro {
     @Column(nullable = false, unique = true, length = 40)
     private String titulo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GeneroLivro genero;
+
     @Column(nullable = false, length = 150)
     private String descricao;
 
@@ -23,7 +27,7 @@ public class Livro {
     private String ISBN;
 
     @Column(nullable = false)
-    private Date dataPublicacao;
+    private LocalDate dataPublicacao;
 
     @JoinColumn
     @ManyToOne
@@ -31,8 +35,11 @@ public class Livro {
 
     private boolean ativo;
 
-    public Livro(String titulo) {
+
+    public Livro(String titulo, boolean ativo, GeneroLivro genero) {
         this.titulo = titulo;
+        this.ativo = ativo;
+        this.genero = genero;
     }
 
     public Livro() {
@@ -71,11 +78,11 @@ public class Livro {
         this.ISBN = ISBN;
     }
 
-    public Date getDataPublicacao() {
+    public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }
 
-    public void setDataPublicacao(Date dataPublicacao) {
+    public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
 
@@ -93,5 +100,18 @@ public class Livro {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public GeneroLivro getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroLivro genero) {
+        this.genero = genero;
+    }
+
+    @Override
+    public String toString(){
+        return titulo;
     }
 }

@@ -25,6 +25,14 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private UsuarioService usuarioService;
 
+    public JwtFilter() {
+    }
+
+    public JwtFilter(JwtService service, UsuarioService usuarioService) {
+        this.service = service;
+        this.usuarioService = usuarioService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getToken(request);
@@ -47,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null) {
             String[] tokenDividido = authHeader.split(" ");
-            if (tokenDividido.length == 2) return tokenDividido[2];
+            if (tokenDividido.length == 2) return tokenDividido[1];
         }
         return null;
     }
