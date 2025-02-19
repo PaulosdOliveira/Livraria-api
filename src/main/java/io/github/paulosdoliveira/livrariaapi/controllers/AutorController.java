@@ -3,14 +3,12 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
-import io.github.paulosdoliveira.livrariaapi.services.FotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,8 +35,11 @@ public class AutorController {
     }
 
     @GetMapping
-    public List<Autor> buscaAleatoria() {
-        return service.buscaAleatoria();
+    public List<Autor> buscaFiltrada(
+            @RequestParam(name = "nome") String nome,
+            @RequestParam(name = "ano") Integer ano
+    ) {
+        return service.consultaFiltrada(nome, ano);
     }
 
     @GetMapping("/foto")
