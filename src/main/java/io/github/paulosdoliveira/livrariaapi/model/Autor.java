@@ -31,8 +31,10 @@ public class Autor {
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
-    private String  UrlFoto;
+    private String UrlFoto;
 
+    @Column()
+    private boolean ativo = true;
 
 
     public UUID getId() {
@@ -73,5 +75,13 @@ public class Autor {
 
     public void setUrlFoto(String urlFoto) {
         UrlFoto = urlFoto;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

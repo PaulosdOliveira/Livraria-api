@@ -2,25 +2,22 @@ package io.github.paulosdoliveira.livrariaapi.mappers;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
+import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
-import io.github.paulosdoliveira.livrariaapi.services.AutorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LivroMapper {
 
-    @Autowired
-    private AutorService autorService;
 
-    public Livro toEntity(LivroCadastroDTO dto) {
+    public Livro toEntity(LivroCadastroDTO dto, Autor autor) {
         var livro = new Livro();
         livro.setTitulo(dto.getTitulo());
         livro.setGenero(dto.getGenero());
         livro.setDescricao(dto.getDescricao());
         livro.setISBN(dto.getISBN());
         livro.setAtivo(true);
-        livro.setAutor(autorService.buscarPorId(dto.getIdAutor()));
+        livro.setAutor(autor);
         livro.setDataPublicacao(dto.getDataPublicacao());
         return livro;
     }

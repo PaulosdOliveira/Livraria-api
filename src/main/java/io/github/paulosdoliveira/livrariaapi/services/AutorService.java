@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import  io.github.paulosdoliveira.livrariaapi.services.LivroService;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,8 +31,9 @@ public class AutorService {
     @Autowired
     private AutorValidator validator;
 
-    private  String URLBASEFOTO = "http://localhost:8080/autores/foto?id=";
-    private  String URLFOTOPADRAO = URLBASEFOTO + "1d80a3d0-e09b-415b-a211-d068bf419620";
+
+    private String URLBASEFOTO = "http://localhost:8080/autores/foto?id=";
+    private String URLFOTOPADRAO = URLBASEFOTO + "1d80a3d0-e09b-415b-a211-d068bf419620";
 
     @Transactional
     public void cadastraAutor(AutorDTO dados, MultipartFile arquivo) {
@@ -52,17 +54,20 @@ public class AutorService {
 
     }
 
-
-    public void deletarAutor(UUID id) {
+    @Transactional
+    public boolean deletarAutor(UUID id) {
         var possivelAutor = repository.findById(id)
                 .orElse(null);
-        repository.delete(possivelAutor);
-
+        if (possivelAutor != null) {
+            possivelAutor.setAtivo(false);
+            return true;
+        }
+        return false;
     }
 
     @Transactional
     public void mudarFoto(MultipartFile arquivo, UUID idAutor) throws IOException {
-        var autor = buscarPorId(idAutor);
+        var autor = buscarAutorAtivoPorId(idAutor);
         if (autor != null) {
             String urlFoto = autor.getUrlFoto();
             if (urlFoto.equals(URLFOTOPADRAO)) {
@@ -88,8 +93,8 @@ public class AutorService {
     }
 
     @Transactional
-    public Autor buscarPorId(UUID id) {
-        return repository.findById(id).orElse(null);
+    public Autor buscarAutorAtivoPorId(UUID id) {
+        return repository.findByIdAndAtivo(id, true).orElse(null);
     }
 
     public Foto buscarFoto(UUID idAutor) {

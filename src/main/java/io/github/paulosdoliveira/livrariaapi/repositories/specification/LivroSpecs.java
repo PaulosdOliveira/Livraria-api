@@ -27,4 +27,9 @@ public class LivroSpecs {
                 cb.equal(cb.function("extract", Integer.class, root.get("dataPublicacao"), cb.literal("YEAR")), ano);
     }
 
+    public static Specification<Livro> isAtivo() {
+        return (root, query, cb)
+                -> cb.equal(root.get("ativo"), true);
+    }
+
 }

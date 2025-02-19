@@ -13,6 +13,7 @@ public class AutorMapper {
         autor.setDataNascimento(dto.getDataNascimento());
         autor.setBreveDescricao(dto.getBreveDescricao());
         autor.setUrlFoto(dto.getUrlFoto());
+        autor.setAtivo(true);
         return autor;
     }
 

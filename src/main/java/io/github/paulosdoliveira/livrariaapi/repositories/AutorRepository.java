@@ -10,14 +10,17 @@ import static io.github.paulosdoliveira.livrariaapi.repositories.specification.A
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface AutorRepository extends JpaRepository<Autor, UUID>, JpaSpecificationExecutor<Autor> {
 
     boolean existsByNomeAndDataNascimento(String nome, LocalDate dataNascimento);
 
+    Optional<Autor> findByIdAndAtivo(UUID id, boolean ativo);
+
     default List<Autor> buscaFiltrada(String nome, Integer ano) {
-        Specification<Autor> specs = conjunction();
+        Specification<Autor> specs = isAtivo();
         if (StringUtils.hasText(nome)) {
             specs = specs.and(nomeLike(nome));
         }

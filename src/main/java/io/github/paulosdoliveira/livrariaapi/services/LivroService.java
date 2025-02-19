@@ -27,7 +27,7 @@ public class LivroService {
     private LivroMapper mapper;
 
     @Autowired
-    private LivroRepository repository;
+    private  LivroRepository repository;
 
     @Autowired
     private LivroValidator validator;
@@ -35,25 +35,31 @@ public class LivroService {
 
     //Salvar novo livro
     public void salvarLivro(LivroCadastroDTO dto) {
-        validator.validar(dto);
-        var livro = mapper.toEntity(dto);
+        var autor = validator.validar(dto);
+        var livro = mapper.toEntity(dto, autor);
         repository.save(livro);
     }
 
     // Ocultar livro setando ativo para falso
     @Transactional
-    public boolean deletarLivro(UUID id) {
+    public void deletarLivro(UUID id) {
         var possivelLivro = repository.findById(id);
-        if (!possivelLivro.isPresent()) return false;
-        var livro = possivelLivro.get();
-        livro.setAtivo(false);
-        return true;
+        if (possivelLivro.isPresent()) {
+            var livro = possivelLivro.get();
+            livro.setAtivo(false);
+        }
+
+    }
+
+
+    public  void deletarEmCascata(UUID idAutor) {
+        repository.deletarEmCascata(idAutor);
     }
 
 
     public Page<LivroCartaoDTO> buscaComFiltro(String titulo, GeneroLivro genero, Integer ano) {
 
-        Specification<Livro> specs = conjunction();
+        Specification<Livro> specs = isAtivo();
 
         if (StringUtils.hasText(titulo)) {
             specs = specs.and(tituloLike(titulo));
@@ -71,8 +77,6 @@ public class LivroService {
         Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
         return pagina;
     }
-
-
 
 
     public boolean existsByIsbn(String isbn) {

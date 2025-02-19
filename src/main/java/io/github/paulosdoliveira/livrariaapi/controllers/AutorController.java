@@ -3,12 +3,14 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
+import io.github.paulosdoliveira.livrariaapi.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +22,9 @@ public class AutorController {
 
     @Autowired
     private AutorService service;
+
+    @Autowired
+    private LivroService livroService;
 
 
     @PostMapping
@@ -36,8 +41,8 @@ public class AutorController {
 
     @GetMapping
     public List<Autor> buscaFiltrada(
-            @RequestParam(name = "nome") String nome,
-            @RequestParam(name = "ano") Integer ano
+            @RequestParam(name = "nome", required = false) String nome,
+            @RequestParam(name = "ano", required = false) Integer ano
     ) {
         return service.consultaFiltrada(nome, ano);
     }
@@ -57,6 +62,13 @@ public class AutorController {
         if (arquivo != null || idAutor != null) {
             service.mudarFoto(arquivo, idAutor);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletarAutor(@PathVariable UUID id) {
+        var deletado = service.deletarAutor(id);
+        if (deletado) livroService.deletarEmCascata(id);
+        return ResponseEntity.noContent().build();
     }
 
 
