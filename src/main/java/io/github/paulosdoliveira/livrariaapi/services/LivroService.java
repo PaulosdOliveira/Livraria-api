@@ -13,9 +13,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import static io.github.paulosdoliveira.livrariaapi.repositories.specification.LivroSpecs.*;
-
 import java.util.UUID;
 
 
@@ -77,7 +75,6 @@ public class LivroService {
         Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
         return pagina;
     }
-
 
     public boolean existsByIsbn(String isbn) {
         return repository.existsByISBN(isbn);

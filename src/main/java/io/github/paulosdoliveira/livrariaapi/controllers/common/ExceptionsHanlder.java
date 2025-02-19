@@ -1,11 +1,10 @@
 package io.github.paulosdoliveira.livrariaapi.controllers.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.paulosdoliveira.livrariaapi.exceptions.AutorDuplicadoException;
-import io.github.paulosdoliveira.livrariaapi.exceptions.InvalidTokenException;
+import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorDuplicadoException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.LivroDuplicadoException;
+import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorInativoException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.resposta.ErroResposta;
-import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,7 +26,11 @@ public class ExceptionsHanlder {
         return new ErroResposta(e.getMessage());
     }
 
-
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AutorInativoException.class)
+    public ErroResposta handlerAutorInativoException(AutorInativoException e) {
+        return new ErroResposta(e.getMessage());
+    }
 
 
 }

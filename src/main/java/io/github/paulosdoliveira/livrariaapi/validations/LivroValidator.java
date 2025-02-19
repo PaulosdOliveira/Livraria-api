@@ -2,6 +2,7 @@ package io.github.paulosdoliveira.livrariaapi.validations;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.exceptions.LivroDuplicadoException;
+import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorInativoException;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
@@ -23,7 +24,7 @@ public class LivroValidator {
         var autor = autorService.buscarAutorAtivoPorId(dados.getIdAutor());
         if (isbnExiste) lancarErro("Este ISBN já está cadastrado");
         if (tituloExiste) lancarErro("Já existe um livro cadastrado com esse titulo");
-        if(autor == null) lancarErro("Autor  não existe");
+        if(autor == null) throw new AutorInativoException("Autor  não existe");
         return autor;
     }
 
