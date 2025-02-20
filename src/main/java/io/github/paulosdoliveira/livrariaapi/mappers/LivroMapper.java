@@ -19,6 +19,7 @@ public class LivroMapper {
         livro.setAtivo(true);
         livro.setAutor(autor);
         livro.setDataPublicacao(dto.getDataPublicacao());
+        livro.setVendas(0L);
         return livro;
     }
 
@@ -29,6 +30,7 @@ public class LivroMapper {
         cartaoDTO.setGenero(livro.getGenero());
         cartaoDTO.setNomeAutor(livro.getAutor().getNome());
         cartaoDTO.setDataPublicacao(livro.getDataPublicacao());
+        cartaoDTO.setVendas(livro.getVendas());
         return cartaoDTO;
     }
 }

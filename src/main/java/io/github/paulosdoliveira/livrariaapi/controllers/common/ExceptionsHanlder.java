@@ -1,6 +1,7 @@
 package io.github.paulosdoliveira.livrariaapi.controllers.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.github.paulosdoliveira.livrariaapi.exceptions.CompraJaEfetuadaException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorDuplicadoException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.LivroDuplicadoException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorInativoException;
@@ -29,6 +30,12 @@ public class ExceptionsHanlder {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AutorInativoException.class)
     public ErroResposta handlerAutorInativoException(AutorInativoException e) {
+        return new ErroResposta(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(CompraJaEfetuadaException.class)
+    public ErroResposta handlerCompraJaEfetuadaException(CompraJaEfetuadaException e){
         return new ErroResposta(e.getMessage());
     }
 

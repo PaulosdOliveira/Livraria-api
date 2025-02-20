@@ -57,6 +57,11 @@ public class AutorController {
         return new ResponseEntity<>(foto.getArquivo(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/letra")
+    public List<AutorDTO> buscaLetrada(@RequestParam Character letra){
+        return service.buscaLetrada(letra);
+    }
+
     @PutMapping
     public void mudarFoto(@RequestParam(name = "arquivo") MultipartFile arquivo, @RequestParam(name = "idAutor") UUID idAutor) throws IOException {
         if (arquivo != null || idAutor != null) {

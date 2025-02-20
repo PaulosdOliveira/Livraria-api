@@ -1,39 +1,28 @@
-package io.github.paulosdoliveira.livrariaapi.model;
+package io.github.paulosdoliveira.livrariaapi.model.compras;
 
-import jakarta.persistence.*;
+import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-import java.util.UUID;
-
-@Entity
-@Table
-public class Compras {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+@Embeddable
+public class ComprasPK {
 
     @JoinColumn
-    @OneToOne
+    @ManyToOne
     private Usuarios usuario;
 
     @JoinColumn
-    @OneToOne
+    @ManyToOne
     private Livro livro;
 
-    public Compras() {
+    public ComprasPK() {
     }
 
-    public Compras( Usuarios usuario, Livro livro) {
+    public ComprasPK(Usuarios usuario, Livro livro) {
         this.usuario = usuario;
         this.livro = livro;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public Usuarios getUsuario() {

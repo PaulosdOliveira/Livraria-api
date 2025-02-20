@@ -35,6 +35,9 @@ public class Livro {
 
     private boolean ativo;
 
+    @Column
+    private Long vendas;
+
 
     public Livro(String titulo, boolean ativo, GeneroLivro genero) {
         this.titulo = titulo;
@@ -110,8 +113,16 @@ public class Livro {
         this.genero = genero;
     }
 
+    public Long getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(Long vendas) {
+        this.vendas = vendas;
+    }
+
     @Override
     public String toString(){
-        return titulo;
+        return titulo + " id:" + id;
     }
 }

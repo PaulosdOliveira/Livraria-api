@@ -88,8 +88,14 @@ public class AutorService {
         return repository.buscaFiltrada(nome, ano);
     }
 
-    public List<Autor> buscaAleatoria() {
-        return repository.findAll();
+    public List<AutorDTO> buscaLetrada(Character letra) {
+        if (letra != null) {
+            var resultado = repository.buscaLetrada(letra.toString().toUpperCase());
+            List<AutorDTO> lista = resultado.stream()
+                    .map(mapper::toDTO).toList();
+            return lista;
+        }
+        return null;
     }
 
     @Transactional
