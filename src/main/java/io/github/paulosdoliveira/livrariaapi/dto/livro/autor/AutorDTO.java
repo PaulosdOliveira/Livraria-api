@@ -8,14 +8,16 @@ public class AutorDTO {
     private String breveDescricao;
     private LocalDate dataNascimento;
     private String UrlFoto;
+    private Long livrosVendidos;
 
     public AutorDTO() {
     }
 
-    public AutorDTO(String nome, String descricaoBreve, LocalDate dataNascimento) {
+    public AutorDTO(String nome, String breveDescricao, LocalDate dataNascimento) {
         this.nome = nome;
-        this.breveDescricao = descricaoBreve;
+        this.breveDescricao = breveDescricao;
         this.dataNascimento = dataNascimento;
+        this.livrosVendidos = 0L;
     }
 
     public String getNome() {
@@ -48,5 +50,13 @@ public class AutorDTO {
 
     public void setUrlFoto(String urlFoto) {
         UrlFoto = urlFoto;
+    }
+
+    public Long getLivrosVendidos() {
+        return livrosVendidos;
+    }
+
+    public void setLivrosVendidos(Long livrosVendidos) {
+        this.livrosVendidos = livrosVendidos;
     }
 }

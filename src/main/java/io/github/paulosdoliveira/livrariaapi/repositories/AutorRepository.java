@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
 import java.time.LocalDate;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,12 +33,13 @@ public interface AutorRepository extends JpaRepository<Autor, UUID>, JpaSpecific
 
     default List<Autor> buscaFiltrada(String nome, Integer ano) {
         Specification<Autor> specs = isAtivo();
+        Sort ordem = Sort.by("livrosVendidos").descending();
         if (StringUtils.hasText(nome)) {
             specs = specs.and(nomeLike(nome));
         }
         if (ano != null && ano.toString().length() == 4) {
             specs = specs.and(anoEqual(ano));
         }
-        return findAll(specs);
+        return findAll(specs,ordem);
     }
 }

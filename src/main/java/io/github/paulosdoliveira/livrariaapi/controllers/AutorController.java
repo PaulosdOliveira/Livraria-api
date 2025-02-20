@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +30,7 @@ public class AutorController {
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarAutor(
             @RequestParam(required = true, value = "nome") String nome,
-            @RequestParam(required = true, value = "descricaoBreve") String descricaoBreve,
+            @RequestParam(required = true, value = "breveDescricao") String descricaoBreve,
             @RequestParam(required = true, value = "dataNascimento") LocalDate dataNascimento,
             @RequestParam(required = false, value = "arquivo") MultipartFile arquivo
     ) throws IOException {

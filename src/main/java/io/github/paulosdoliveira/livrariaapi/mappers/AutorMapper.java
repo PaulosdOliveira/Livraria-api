@@ -24,6 +24,7 @@ public class AutorMapper {
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setBreveDescricao(entity.getBreveDescricao());
         dto.setUrlFoto(entity.getUrlFoto());
+        dto.setLivrosVendidos(entity.getLivrosVendidos());
         return dto;
     }
 }
