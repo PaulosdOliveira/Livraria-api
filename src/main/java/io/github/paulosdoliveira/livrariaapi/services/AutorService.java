@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -71,17 +69,13 @@ public class AutorService {
         if (autor != null) {
             String urlFoto = autor.getUrlFoto();
             if (urlFoto.equals(URLFOTOPADRAO)) {
-                System.out.println("/**********************************************************");
                 fotoService.salvarFoto(arquivo, autor);
                 autor.setUrlFoto(URLBASEFOTO + autor.getId());
             } else {
-                System.out.println("/---------------------------------------------------------");
                 Foto fotoAtual = fotoService.buscarFoto(idAutor);
                 fotoService.mudarFotoAtual(arquivo, fotoAtual);
             }
         }
-
-
     }
 
     public List<Autor> consultaFiltrada(String nome, Integer ano) {

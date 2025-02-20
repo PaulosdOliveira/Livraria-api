@@ -14,6 +14,7 @@ public class AutorMapper {
         autor.setBreveDescricao(dto.getBreveDescricao());
         autor.setUrlFoto(dto.getUrlFoto());
         autor.setAtivo(true);
+        autor.setLivrosVendidos(0L);
         return autor;
     }
 

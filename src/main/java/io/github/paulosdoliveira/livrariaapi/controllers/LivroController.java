@@ -38,7 +38,7 @@ public class LivroController {
 
 
     ) {
-        return service.buscaComFiltro(titulo, genero, ano);
+        return service.buscaComFiltro(titulo, genero, ano, false);
     }
 
 }

@@ -21,10 +21,6 @@ public class AutorSpecs {
                 -> cb.equal(root.get("ativo"), true);
     }
 
-    public static Specification<Autor> buscaLetrada(Character letra) {
-        return (root, query, cb) -> cb.like(cb.upper(root.get("nome"))
-                , "%" + letra);
-    }
 
     public static Specification<Autor> conjunction() {
         return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();

@@ -32,4 +32,10 @@ public class LivroSpecs {
                 -> cb.equal(root.get("ativo"), true);
     }
 
+    public static Specification<Livro> maisAntigos(boolean maisAntigos){
+
+        return null ;
+    }
+
+
 }

@@ -1,10 +1,10 @@
 package io.github.paulosdoliveira.livrariaapi.services;
 
-
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.compras.ComprasDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.compras.Compras;
+import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
 import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.CompraValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ public class ComprasService {
     @Autowired
     private LivroMapper livroMapper;
 
+    @Autowired
+    private AutorRepository autorRepository;
+
     @Transactional
     public void comprar(ComprasDTO dados) {
         var idUsuario = dados.idUsuario();
@@ -42,6 +45,8 @@ public class ComprasService {
         var compra = new Compras(usuario, livro);
         repository.save(compra);
         livro.setVendas(livro.getVendas() + 1);
+        UUID idAutor = livro.getAutor().getId();
+        autorRepository.vendeuLivro(idAutor);
     }
 
     public List<LivroCartaoDTO> getLivrosComprados(UUID id) {

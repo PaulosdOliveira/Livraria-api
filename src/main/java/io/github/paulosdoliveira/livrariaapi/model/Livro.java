@@ -2,10 +2,13 @@ package io.github.paulosdoliveira.livrariaapi.model;
 
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
-
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Livro {
 
@@ -37,6 +40,10 @@ public class Livro {
 
     @Column
     private Long vendas;
+
+    @CreatedDate
+    @Column
+    private LocalDate dataPostagem;
 
 
     public Livro(String titulo, boolean ativo, GeneroLivro genero) {
@@ -119,6 +126,14 @@ public class Livro {
 
     public void setVendas(Long vendas) {
         this.vendas = vendas;
+    }
+
+    public LocalDate getDataPostagem() {
+        return dataPostagem;
+    }
+
+    public void setDataPostagem(LocalDate dataPostagem) {
+        this.dataPostagem = dataPostagem;
     }
 
     @Override
