@@ -45,6 +45,9 @@ public class Livro {
     @Column
     private LocalDate dataPostagem;
 
+    @Column
+    private byte[] imagem;
+
 
     public Livro(String titulo, boolean ativo, GeneroLivro genero) {
         this.titulo = titulo;
@@ -134,6 +137,14 @@ public class Livro {
 
     public void setDataPostagem(LocalDate dataPostagem) {
         this.dataPostagem = dataPostagem;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
     @Override

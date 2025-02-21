@@ -6,7 +6,6 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
-import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
@@ -51,13 +50,14 @@ public class LivroService {
     }
 
     @Transactional
-    public void alterarInformacoes(LivroNovosDadosDTO dados) {
-        var livro = repository.findByISBN(dados.getISBN()).get();
+    public void alterarInformacoes(LivroNovosDadosDTO dados, UUID idLivro) {
+        var livro = repository.findById(idLivro).get();
         var autor = validator.validar(livro, dados.getIdAutor());
         if (StringUtils.hasText(dados.getDescricao())) livro.setDescricao(dados.getDescricao());
         if (dados.getGenero()  != null) livro.setGenero(dados.getGenero());
         if (StringUtils.hasText(dados.getTitulo())) livro.setTitulo(dados.getTitulo());
         if (dados.getDataPublicacao() != null) livro.setDataPublicacao(dados.getDataPublicacao());
+        if(StringUtils.hasText(dados.getISBN())) livro.setISBN(dados.getISBN());
         if (autor != null) livro.setAutor(autor);
     }
 

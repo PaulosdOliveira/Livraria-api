@@ -1,17 +1,17 @@
 package io.github.paulosdoliveira.livrariaapi.dto.livro;
 
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
-
-
 import java.time.LocalDate;
 
 
 public class LivroCartaoDTO {
     private String titulo;
+    private String descricao;
     private GeneroLivro genero;
     private LocalDate dataPublicacao;
     private String nomeAutor;
     private Long vendas;
+    private String urlImagem;
 
 
     public LivroCartaoDTO() {
@@ -56,5 +56,21 @@ public class LivroCartaoDTO {
 
     public void setVendas(Long vendas) {
         this.vendas = vendas;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 }

@@ -1,10 +1,8 @@
 package io.github.paulosdoliveira.livrariaapi.repositories;
 
 
-import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
-import org.hibernate.query.criteria.JpaCriteriaUpdate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;

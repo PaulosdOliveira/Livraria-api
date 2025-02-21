@@ -4,7 +4,6 @@ import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.UUID;
 
 public class LivroSpecs {
 
@@ -24,7 +23,6 @@ public class LivroSpecs {
     }
 
     public static Specification<Livro> anoEqual(Integer ano) {
-
         return (root, query, cb) ->
                 cb.equal(cb.function("extract", Integer.class, root.get("dataPublicacao"), cb.literal("YEAR")), ano);
     }

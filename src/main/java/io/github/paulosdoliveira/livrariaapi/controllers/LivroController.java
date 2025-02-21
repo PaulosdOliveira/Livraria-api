@@ -39,20 +39,18 @@ public class LivroController {
             @RequestParam(name = "titulo", required = false) String titulo,
             @RequestParam(name = "genero", required = false) GeneroLivro genero,
             @RequestParam(name = "ano", required = false) Integer ano
-
-
     ) {
         return service.buscaComFiltro(titulo, genero, ano, false);
     }
 
-    @PutMapping
-    public ResponseEntity alterarDados(@RequestBody LivroNovosDadosDTO dados){
-        service.alterarInformacoes(dados);
+    @PutMapping("/{idLivro}")
+    public ResponseEntity alterarDados(@RequestBody LivroNovosDadosDTO dados, @PathVariable UUID idLivro) {
+        service.alterarInformacoes(dados, idLivro);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletar(@PathVariable UUID id){
+    public ResponseEntity deletar(@PathVariable UUID id) {
         service.deletarLivro(id);
         return ResponseEntity.noContent().build();
     }
