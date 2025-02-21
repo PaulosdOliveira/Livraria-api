@@ -24,6 +24,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
 
 
     Optional<Livro> findByTitulo(String titulo);
+
     Optional<Livro> findByISBN(String isbn);
 
     @Transactional
@@ -55,5 +56,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
         return findAll(specs, ordem);
     }
 
-
+    @Query("Select l.imagem from Livro l where l.id = :idLivro")
+    byte[] buscarImagem(@Param("idLivro") UUID idLivro);
 }

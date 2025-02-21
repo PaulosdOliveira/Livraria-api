@@ -3,7 +3,9 @@ package io.github.paulosdoliveira.livrariaapi.dto.livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -27,6 +29,18 @@ public class LivroCadastroDTO {
 
     @NotNull(message = "Campo obrigatório")
     private UUID idAutor;
+
+    private byte[] imagem;
+
+    public LivroCadastroDTO(String titulo, String descricao, GeneroLivro genero, String isbn, LocalDate dataPublicacao, UUID idAutor, MultipartFile arquivo) throws IOException {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.genero = genero;
+        this.ISBN = isbn;
+        this.dataPublicacao = dataPublicacao;
+        this.idAutor = idAutor;
+        this.imagem = arquivo.getBytes();
+    }
 
 
     public String getTitulo() {
@@ -77,5 +91,11 @@ public class LivroCadastroDTO {
         this.idAutor = idAutor;
     }
 
+    public byte[] getImagem() {
+        return imagem;
+    }
 
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
 }

@@ -70,10 +70,16 @@ public class LivroService {
         var listaDTO = consulta.stream().map(mapper::toCartao).toList();
         Pageable page = PageRequest.of(0, 12);
         Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
+
+        System.out.println("*********************" + consulta.get(0).isAtivo());
         return pagina;
     }
 
     public Livro buscarPorId(UUID id) {
         return repository.findById(id).orElse(null);
+    }
+
+    public byte[] buscarImagem(UUID idLivro) {
+       return repository.buscarImagem(idLivro);
     }
 }

@@ -10,12 +10,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,15 @@ public class LivroController {
 
     @PreAuthorize("hasRole('ROLE_ADMNISTRADOR')")
     @PostMapping
-    public ResponseEntity cadastrarLivro(@RequestBody @Valid LivroCadastroDTO dados) {
+    public ResponseEntity cadastrarLivro(
+            @RequestParam() String titulo,
+            @RequestParam String descricao,
+            @RequestParam GeneroLivro genero,
+            @RequestParam String ISBN,
+            @RequestParam LocalDate dataPublicacao,
+            @RequestParam UUID idAutor,
+            @RequestParam MultipartFile arquivo) throws IOException {
+        var dados = new LivroCadastroDTO(titulo, descricao, genero, ISBN, dataPublicacao, idAutor, arquivo);
         service.salvarLivro(dados);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -41,6 +50,16 @@ public class LivroController {
             @RequestParam(name = "ano", required = false) Integer ano
     ) {
         return service.buscaComFiltro(titulo, genero, ano, false);
+    }
+
+    @GetMapping("/foto/{idLivro}")
+    public ResponseEntity<byte[]> renderizarImagem(@PathVariable UUID idLivro) {
+        var arquivo = service.buscarImagem(idLivro);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentLength(arquivo.length);
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentDispositionFormData("inline; fileName=\"" + "Foto" + "\"", "Foto");
+        return new ResponseEntity<>(arquivo,headers,  HttpStatus.OK);
     }
 
     @PutMapping("/{idLivro}")

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LivroMapper {
 
-    private String URLBase = "";
+    private  String URLBase = "http://localhost:8080/livro/";
 
     public Livro toEntity(LivroCadastroDTO dto) {
         var livro = new Livro();
@@ -19,6 +19,7 @@ public class LivroMapper {
         livro.setAtivo(true);
         livro.setDataPublicacao(dto.getDataPublicacao());
         livro.setVendas(0L);
+        livro.setImagem(dto.getImagem());
         return livro;
     }
 

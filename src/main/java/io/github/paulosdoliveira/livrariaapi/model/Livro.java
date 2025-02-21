@@ -4,6 +4,7 @@ import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -58,6 +59,8 @@ public class Livro {
     public Livro() {
 
     }
+
+
 
     public UUID getId() {
         return id;
