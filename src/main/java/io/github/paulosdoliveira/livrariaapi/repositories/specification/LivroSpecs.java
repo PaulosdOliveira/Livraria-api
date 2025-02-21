@@ -4,6 +4,8 @@ import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.UUID;
+
 public class LivroSpecs {
 
 
@@ -32,10 +34,7 @@ public class LivroSpecs {
                 -> cb.equal(root.get("ativo"), true);
     }
 
-    public static Specification<Livro> maisAntigos(boolean maisAntigos){
 
-        return null ;
-    }
 
 
 }

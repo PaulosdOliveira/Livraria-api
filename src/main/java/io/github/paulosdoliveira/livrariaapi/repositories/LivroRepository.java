@@ -1,8 +1,10 @@
 package io.github.paulosdoliveira.livrariaapi.repositories;
 
 
+import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
+import org.hibernate.query.criteria.JpaCriteriaUpdate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,12 +19,14 @@ import static io.github.paulosdoliveira.livrariaapi.repositories.specification.L
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
-    boolean existsByISBN(String ISBN);
 
-    boolean existsByTitulo(String titulo);
+
+    Optional<Livro> findByTitulo(String titulo);
+    Optional<Livro> findByISBN(String isbn);
 
     @Transactional
     @Modifying
@@ -30,8 +34,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     void deletarEmCascata(@Param("idAutor") UUID idAutor);
 
 
-
     default List<Livro> buscaFiltrada(String titulo, GeneroLivro genero, Integer ano, boolean maisAntigo) {
+
         Specification<Livro> specs = isAtivo();
 
         if (StringUtils.hasText(titulo)) {
@@ -46,7 +50,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
         Sort ordem = Sort.by("vendas").descending();
         if (!maisAntigo) {
             ordem.and(Sort.by("dataPostagem").descending());
-        }else{
+        } else {
             ordem.and(Sort.by("dataPostagem").ascending());
         }
 

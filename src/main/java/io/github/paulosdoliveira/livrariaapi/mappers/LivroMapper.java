@@ -10,14 +10,13 @@ import org.springframework.stereotype.Component;
 public class LivroMapper {
 
 
-    public Livro toEntity(LivroCadastroDTO dto, Autor autor) {
+    public Livro toEntity(LivroCadastroDTO dto) {
         var livro = new Livro();
         livro.setTitulo(dto.getTitulo());
         livro.setGenero(dto.getGenero());
         livro.setDescricao(dto.getDescricao());
         livro.setISBN(dto.getISBN());
         livro.setAtivo(true);
-        livro.setAutor(autor);
         livro.setDataPublicacao(dto.getDataPublicacao());
         livro.setVendas(0L);
         return livro;

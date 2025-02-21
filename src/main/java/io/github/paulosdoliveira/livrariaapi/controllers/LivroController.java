@@ -2,6 +2,7 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
+import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import io.github.paulosdoliveira.livrariaapi.services.LivroService;
@@ -33,8 +34,6 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
-
     @GetMapping
     public Page<LivroCartaoDTO> buscarPorTitulo(
             @RequestParam(name = "titulo", required = false) String titulo,
@@ -44,6 +43,12 @@ public class LivroController {
 
     ) {
         return service.buscaComFiltro(titulo, genero, ano, false);
+    }
+
+    @PutMapping
+    public ResponseEntity alterarDados(@RequestBody LivroNovosDadosDTO dados){
+        service.alterarInformacoes(dados);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
