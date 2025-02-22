@@ -8,6 +8,7 @@ import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
 import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.CompraValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +37,9 @@ public class ComprasService {
     private AutorRepository autorRepository;
 
     @Transactional
-    public void comprar(ComprasDTO dados) {
-        var idUsuario = dados.idUsuario();
-        var idLivro = dados.idLivro();
-        var usuario = usuarioService.buscarPorId(idUsuario);
+    public void comprar(UUID idLivro) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        var usuario = usuarioService.findByEmail(email);
         var livro = livroService.buscarPorId(idLivro);
         validator.validar(usuario, livro);
         var compra = new Compras(usuario, livro);

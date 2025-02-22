@@ -22,7 +22,7 @@ public class LivroValidator {
     private AutorService autorService;
 
     public Autor validar(Livro livro, UUID idAutor) {
-        if (idAutor != null) {
+        if (idAutor == null) {
             var autor = autorService.buscarAutorAtivoPorId(idAutor);
             if (isbnExiste(livro)) lancarErro("Este ISBN já está cadastrado");
             if (tituloExiste(livro)) lancarErro("Já existe um livro cadastrado com esse titulo");

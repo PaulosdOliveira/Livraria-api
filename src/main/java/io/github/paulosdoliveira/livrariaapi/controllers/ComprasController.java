@@ -19,9 +19,9 @@ public class ComprasController {
     @Autowired
     private ComprasService service;
 
-    @PostMapping
-    public ResponseEntity comprar(@RequestBody ComprasDTO dados) {
-        service.comprar(dados);
+    @PostMapping("/{idLivro}")
+    public ResponseEntity comprar(@PathVariable UUID idLivro) {
+        service.comprar(idLivro);
         return ResponseEntity.ok().build();
     }
 
