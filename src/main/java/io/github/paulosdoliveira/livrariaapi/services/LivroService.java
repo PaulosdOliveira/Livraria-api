@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import java.util.UUID;
 
 
@@ -54,15 +53,12 @@ public class LivroService {
         var livro = repository.findById(idLivro).get();
         var autor = validator.validar(livro, dados.getIdAutor());
         if (StringUtils.hasText(dados.getDescricao())) livro.setDescricao(dados.getDescricao());
-        if (dados.getGenero()  != null) livro.setGenero(dados.getGenero());
+        if (dados.getGenero() != null) livro.setGenero(dados.getGenero());
         if (StringUtils.hasText(dados.getTitulo())) livro.setTitulo(dados.getTitulo());
         if (dados.getDataPublicacao() != null) livro.setDataPublicacao(dados.getDataPublicacao());
-        if(StringUtils.hasText(dados.getISBN())) livro.setISBN(dados.getISBN());
+        if (StringUtils.hasText(dados.getISBN())) livro.setISBN(dados.getISBN());
+        if (dados.getImagem() != null) livro.setImagem(dados.getImagem());
         if (autor != null) livro.setAutor(autor);
-    }
-
-    public void deletarEmCascata(UUID idAutor) {
-        repository.deletarEmCascata(idAutor);
     }
 
     public Page<LivroCartaoDTO> buscaComFiltro(String titulo, GeneroLivro genero, Integer ano, boolean maisAntigo) {
@@ -70,9 +66,11 @@ public class LivroService {
         var listaDTO = consulta.stream().map(mapper::toCartao).toList();
         Pageable page = PageRequest.of(0, 12);
         Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
-
-        System.out.println("*********************" + consulta.get(0).isAtivo());
         return pagina;
+    }
+
+    public void deletarEmCascata(UUID idAutor) {
+        repository.deletarEmCascata(idAutor);
     }
 
     public Livro buscarPorId(UUID id) {
@@ -80,6 +78,6 @@ public class LivroService {
     }
 
     public byte[] buscarImagem(UUID idLivro) {
-       return repository.buscarImagem(idLivro);
+        return repository.buscarImagem(idLivro);
     }
 }

@@ -59,11 +59,21 @@ public class LivroController {
         headers.setContentLength(arquivo.length);
         headers.setContentType(MediaType.IMAGE_JPEG);
         headers.setContentDispositionFormData("inline; fileName=\"" + "Foto" + "\"", "Foto");
-        return new ResponseEntity<>(arquivo,headers,  HttpStatus.OK);
+        return new ResponseEntity<>(arquivo, headers, HttpStatus.OK);
     }
 
     @PutMapping("/{idLivro}")
-    public ResponseEntity alterarDados(@RequestBody LivroNovosDadosDTO dados, @PathVariable UUID idLivro) {
+    public ResponseEntity alterarDados(
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String ISBN,
+            @RequestParam(required = false) GeneroLivro genero,
+            @RequestParam(required = false) LocalDate dataPublicacao,
+            @RequestParam(required = false) UUID idAutor,
+            @RequestParam(required = false) MultipartFile arquivo,
+            @PathVariable UUID idLivro
+    ) throws IOException {
+        var dados = new LivroNovosDadosDTO(titulo,descricao, genero, ISBN, dataPublicacao, idAutor, arquivo);
         service.alterarInformacoes(dados, idLivro);
         return ResponseEntity.ok().build();
     }
