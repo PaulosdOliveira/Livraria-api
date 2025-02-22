@@ -33,7 +33,8 @@ public class Foto {
     public Foto() {
     }
 
-    public Foto( byte[] arquivo, String nome, ExtensaoFoto extesao, Autor autor, Long tamanho) {
+    public Foto( UUID id, byte[] arquivo, String nome, ExtensaoFoto extesao, Autor autor, Long tamanho) {
+        this.id = id;
         this.arquivo = arquivo;
         this.nome = nome;
         this.extesao = extesao;

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
 import java.time.LocalDate;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +18,7 @@ import static io.github.paulosdoliveira.livrariaapi.repositories.specification.A
 
 public interface AutorRepository extends JpaRepository<Autor, UUID>, JpaSpecificationExecutor<Autor> {
 
-    boolean existsByNomeAndDataNascimento(String nome, LocalDate dataNascimento);
+    Optional<Autor> findByNomeAndDataNascimento(String nome, LocalDate dataNascimento);
 
     Optional<Autor> findByIdAndAtivo(UUID id, boolean ativo);
 

@@ -39,7 +39,8 @@ public class LivroCadastroDTO {
         this.ISBN = isbn;
         this.dataPublicacao = dataPublicacao;
         this.idAutor = idAutor;
-        this.imagem = arquivo.getBytes();
+        if(arquivo != null) this.imagem = arquivo.getBytes();
+
     }
 
 

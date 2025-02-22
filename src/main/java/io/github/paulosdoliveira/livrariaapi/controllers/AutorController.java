@@ -47,8 +47,8 @@ public class AutorController {
     }
 
     @GetMapping("/foto")
-    public ResponseEntity<byte[]> buscarFoto(@RequestParam(value = "id") UUID id) {
-        var foto = service.buscarFoto(id);
+    public ResponseEntity<byte[]> buscarFoto(@RequestParam(value = "id") UUID idFoto) {
+        var foto = service.buscarFoto(idFoto);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(foto.getExtesao().getMediaType());
         headers.setContentLength(foto.getTamanho());
@@ -57,15 +57,18 @@ public class AutorController {
     }
 
     @GetMapping("/letra")
-    public List<AutorDTO> buscaLetrada(@RequestParam Character letra){
+    public List<AutorDTO> buscaLetrada(@RequestParam Character letra) {
         return service.buscaLetrada(letra);
     }
 
-    @PutMapping
-    public void mudarFoto(@RequestParam(name = "arquivo") MultipartFile arquivo, @RequestParam(name = "idAutor") UUID idAutor) throws IOException {
-        if (arquivo != null || idAutor != null) {
-            service.mudarFoto(arquivo, idAutor);
-        }
+    @PatchMapping("/{idAutor}")
+    public void mudarFoto(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String breveDescricao,
+            @RequestParam(required = false) MultipartFile arquivo,
+            @RequestParam(required = false) LocalDate dataNascimento,
+            @PathVariable() UUID idAutor) throws IOException {
+        service.editarInformacoes(nome, breveDescricao, dataNascimento, arquivo, idAutor);
     }
 
     @DeleteMapping("/{id}")

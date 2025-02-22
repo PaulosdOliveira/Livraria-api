@@ -10,13 +10,6 @@ import java.util.UUID;
 @Table
 public class Autor {
 
-    public Autor() {
-
-    }
-
-    public Autor(String nome) {
-        this.nome = nome;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,6 +31,24 @@ public class Autor {
     private boolean ativo = true;
 
     private Long livrosVendidos;
+
+
+
+    public Autor() {
+
+    }
+
+    public Autor(UUID id, String nome, LocalDate dataNascimento) {
+        this.id = id;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Autor(String nome) {
+        this.nome = nome;
+    }
+
+
 
 
     public UUID getId() {

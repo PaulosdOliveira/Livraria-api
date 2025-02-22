@@ -12,19 +12,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import static io.github.paulosdoliveira.livrariaapi.repositories.specification.LivroSpecs.*;
-
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import static io.github.paulosdoliveira.livrariaapi.repositories.specification.LivroSpecs.*;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
 
 
     Optional<Livro> findByTitulo(String titulo);
-
     Optional<Livro> findByISBN(String isbn);
 
     @Transactional
@@ -36,6 +32,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     default List<Livro> buscaFiltrada(String titulo, GeneroLivro genero, Integer ano, boolean maisAntigo) {
 
         Specification<Livro> specs = isAtivo();
+        Sort ordem = Sort.by("vendas").descending();
 
         if (StringUtils.hasText(titulo)) {
             specs = specs.and(tituloLike(titulo));
@@ -46,7 +43,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
         if (ano != null) {
             specs = specs.and(anoEqual(ano));
         }
-        Sort ordem = Sort.by("vendas").descending();
         if (!maisAntigo) {
             ordem.and(Sort.by("dataPostagem").descending());
         } else {

@@ -12,11 +12,12 @@ import java.util.UUID;
 
 public interface FotoRepository extends JpaRepository<Foto, UUID> {
 
-    Optional<Foto> findByAutor(Autor autor);
 
-    @Query("Select f from Foto f  where f.autor.id = :idAutor ")
+    @Query("Select f from Foto f where f.autor.id = :idAutor ")
     Optional<Foto> buscarPorIdAutor(UUID idAutor);
 
+    @Query("Select f.id from Foto f where f.autor.id = :idAutor")
+    UUID buscarIdFoto(@Param("idAutor") UUID idAutor);
 
 
 
