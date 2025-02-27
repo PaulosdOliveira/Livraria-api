@@ -5,5 +5,4 @@ public enum PerfilUsuario {
     USUARIO,
     ADMNISTRADOR;
 
-
 }
