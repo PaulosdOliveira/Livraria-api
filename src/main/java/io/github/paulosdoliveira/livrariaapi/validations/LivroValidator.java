@@ -1,6 +1,5 @@
 package io.github.paulosdoliveira.livrariaapi.validations;
 
-import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.exceptions.LivroDuplicadoException;
 import io.github.paulosdoliveira.livrariaapi.exceptions.autor.AutorInativoException;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
@@ -9,7 +8,6 @@ import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.UUID;
 
 @Component
