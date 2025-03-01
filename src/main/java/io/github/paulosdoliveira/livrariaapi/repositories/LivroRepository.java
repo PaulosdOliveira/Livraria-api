@@ -1,6 +1,5 @@
 package io.github.paulosdoliveira.livrariaapi.repositories;
 
-
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import org.springframework.data.domain.Sort;
@@ -29,16 +28,18 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     void deletarEmCascata(@Param("idAutor") UUID idAutor);
 
 
-    default List<Livro> buscaFiltrada(String titulo, GeneroLivro genero, Integer ano, boolean maisAntigo) {
+    default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
 
         Specification<Livro> specs = isAtivo();
         Sort ordem = Sort.by("vendas").descending();
+        GeneroLivro generoEnum = GeneroLivro.valueOfString(genero);
+        System.out.println(generoEnum);
 
         if (StringUtils.hasText(titulo)) {
             specs = specs.and(tituloLike(titulo));
         }
-        if (genero != null) {
-            specs = specs.and(generoIqual(genero));
+        if (generoEnum != null) {
+            specs = specs.and(generoIqual(generoEnum));
         }
         if (ano != null) {
             specs = specs.and(anoEqual(ano));

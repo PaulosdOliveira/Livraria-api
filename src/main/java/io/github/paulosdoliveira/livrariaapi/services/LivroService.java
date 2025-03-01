@@ -10,9 +10,10 @@ import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 import java.util.UUID;
 
 
@@ -61,12 +62,12 @@ public class LivroService {
         if (autor != null) livro.setAutor(autor);
     }
 
-    public Page<LivroCartaoDTO> buscaComFiltro(String titulo, GeneroLivro genero, Integer ano, boolean maisAntigo) {
+    public List<LivroCartaoDTO> buscaComFiltro(String titulo, String genero, Integer ano, boolean maisAntigo) {
         var consulta = repository.buscaFiltrada(titulo, genero, ano, maisAntigo);
         var listaDTO = consulta.stream().map(mapper::toCartao).toList();
-        Pageable page = PageRequest.of(0, 12);
-        Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());
-        return pagina;
+        /*Pageable page = PageRequest.of(0, 12);
+        Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());*/
+        return listaDTO;
     }
 
     public void deletarEmCascata(UUID idAutor) {

@@ -44,9 +44,9 @@ public class LivroController {
     }
 
     @GetMapping
-    public Page<LivroCartaoDTO> buscarPorTitulo(
+    public List<LivroCartaoDTO> buscarPorTitulo(
             @RequestParam(name = "titulo", required = false) String titulo,
-            @RequestParam(name = "genero", required = false) GeneroLivro genero,
+            @RequestParam(name = "genero", required = false) String genero,
             @RequestParam(name = "ano", required = false) Integer ano
     ) {
         return service.buscaComFiltro(titulo, genero, ano, false);

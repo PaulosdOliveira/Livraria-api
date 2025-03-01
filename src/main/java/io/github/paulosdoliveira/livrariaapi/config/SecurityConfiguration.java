@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/usuario/**").permitAll();
                     auth.requestMatchers("/autores/foto/**").permitAll();
+                    auth.requestMatchers("/livros/foto/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

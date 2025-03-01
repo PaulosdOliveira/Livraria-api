@@ -2,13 +2,10 @@ package io.github.paulosdoliveira.livrariaapi.repositories.specification;
 
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
-import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.expression.spel.ast.Projection;
 
 
 public class LivroSpecs {
-
 
     public static Specification<Livro> conjunction() {
         return (root, query, cb) -> cb.conjunction();
@@ -33,8 +30,6 @@ public class LivroSpecs {
     public static Specification<Livro> isAtivo() {
         return (root, query, cb)
                 -> cb.equal(root.get("ativo"), true);
-
-
     }
 
 
