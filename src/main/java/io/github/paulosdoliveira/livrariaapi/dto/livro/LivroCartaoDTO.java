@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public class LivroCartaoDTO {
     private String titulo;
     private String descricao;
+    private String preco;
     private GeneroLivro genero;
     private LocalDate dataPublicacao;
     private String nomeAutor;
@@ -64,6 +65,14 @@ public class LivroCartaoDTO {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getPreco() {
+        return preco;
+    }
+
+    public void setPreco(String preco) {
+        this.preco = preco;
     }
 
     public String getUrlImagem() {

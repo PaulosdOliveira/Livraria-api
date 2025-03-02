@@ -5,7 +5,6 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
-import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
@@ -58,6 +57,7 @@ public class LivroService {
         if (StringUtils.hasText(dados.getTitulo())) livro.setTitulo(dados.getTitulo());
         if (dados.getDataPublicacao() != null) livro.setDataPublicacao(dados.getDataPublicacao());
         if (StringUtils.hasText(dados.getISBN())) livro.setISBN(dados.getISBN());
+        if(dados.getPreco() != null) livro.setPreco(dados.getPreco());
         if (dados.getImagem() != null) livro.setImagem(dados.getImagem());
         if (autor != null) livro.setAutor(autor);
     }

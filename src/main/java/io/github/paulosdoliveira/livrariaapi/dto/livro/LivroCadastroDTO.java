@@ -30,15 +30,19 @@ public class LivroCadastroDTO {
     @NotNull(message = "Campo obrigatório")
     private UUID idAutor;
 
+    @NotNull(message = "Campo obrigatório")
+    private Float preco;
+
     private byte[] imagem;
 
-    public LivroCadastroDTO(String titulo, String descricao, GeneroLivro genero, String isbn, LocalDate dataPublicacao, UUID idAutor, MultipartFile arquivo) throws IOException {
+    public LivroCadastroDTO(String titulo, String descricao, GeneroLivro genero, String isbn, LocalDate dataPublicacao, Float preco, UUID idAutor, MultipartFile arquivo) throws IOException {
         this.titulo = titulo;
         this.descricao = descricao;
         this.genero = genero;
         this.ISBN = isbn;
         this.dataPublicacao = dataPublicacao;
         this.idAutor = idAutor;
+        this.preco = preco;
         if(arquivo != null) this.imagem = arquivo.getBytes();
 
     }
@@ -98,5 +102,13 @@ public class LivroCadastroDTO {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public Float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Float preco) {
+        this.preco = preco;
     }
 }

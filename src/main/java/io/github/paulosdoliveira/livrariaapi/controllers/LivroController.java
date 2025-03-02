@@ -36,9 +36,10 @@ public class LivroController {
             @RequestParam GeneroLivro genero,
             @RequestParam String ISBN,
             @RequestParam LocalDate dataPublicacao,
+            @RequestParam Float preco,
             @RequestParam UUID idAutor,
             @RequestParam MultipartFile arquivo) throws IOException {
-        var dados = new LivroCadastroDTO(titulo, descricao, genero, ISBN, dataPublicacao, idAutor, arquivo);
+        var dados = new LivroCadastroDTO(titulo, descricao, genero, ISBN, dataPublicacao, preco, idAutor, arquivo);
         service.salvarLivro(dados);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -66,6 +67,7 @@ public class LivroController {
     public ResponseEntity alterarDados(
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) Float preco,
             @RequestParam(required = false) String ISBN,
             @RequestParam(required = false) GeneroLivro genero,
             @RequestParam(required = false) LocalDate dataPublicacao,
@@ -73,7 +75,7 @@ public class LivroController {
             @RequestParam(required = false) MultipartFile arquivo,
             @PathVariable UUID idLivro
     ) throws IOException {
-        var dados = new LivroNovosDadosDTO(titulo,descricao, genero, ISBN, dataPublicacao, idAutor, arquivo);
+        var dados = new LivroNovosDadosDTO(titulo,descricao,preco, genero, ISBN, dataPublicacao, idAutor, arquivo);
         service.alterarInformacoes(dados, idLivro);
         return ResponseEntity.ok().build();
     }

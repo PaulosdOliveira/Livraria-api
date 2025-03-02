@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class LivroNovosDadosDTO extends LivroCadastroDTO {
 
-    public LivroNovosDadosDTO(String titulo, String descricao, GeneroLivro genero, String isbn, LocalDate dataPublicacao, UUID idAutor, MultipartFile arquivo) throws IOException {
-        super(titulo, descricao, genero, isbn, dataPublicacao, idAutor, arquivo);
+    public LivroNovosDadosDTO(String titulo,  String descricao, Float  preco, GeneroLivro genero, String isbn, LocalDate dataPublicacao, UUID idAutor, MultipartFile arquivo) throws IOException {
+        super(titulo, descricao, genero, isbn, dataPublicacao, preco, idAutor, arquivo);
     }
 }

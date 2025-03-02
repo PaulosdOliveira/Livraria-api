@@ -2,6 +2,7 @@ package io.github.paulosdoliveira.livrariaapi.model;
 
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,10 @@ public class Livro {
     @CreatedDate
     @Column
     private LocalDate dataPostagem;
+
+
+    @Column
+    private Float preco;
 
     @Column
     private byte[] imagem;
@@ -148,6 +153,14 @@ public class Livro {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public Float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Float preco) {
+        this.preco = preco;
     }
 
     @Override

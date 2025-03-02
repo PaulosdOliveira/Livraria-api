@@ -13,6 +13,7 @@ public class LivroMapper {
     public Livro toEntity(LivroCadastroDTO dto) {
         var livro = new Livro();
         livro.setTitulo(dto.getTitulo());
+        livro.setPreco(dto.getPreco());
         livro.setGenero(dto.getGenero());
         livro.setDescricao(dto.getDescricao());
         livro.setISBN(dto.getISBN());
@@ -28,6 +29,7 @@ public class LivroMapper {
         cartaoDTO.setTitulo(livro.getTitulo());
         cartaoDTO.setDescricao(livro.getDescricao());
         cartaoDTO.setGenero(livro.getGenero());
+        cartaoDTO.setPreco(String.format("%.2f",livro.getPreco()).replace(".",",") + "$");
         cartaoDTO.setNomeAutor(livro.getAutor().getNome());
         cartaoDTO.setDataPublicacao(livro.getDataPublicacao());
         cartaoDTO.setVendas(livro.getVendas());

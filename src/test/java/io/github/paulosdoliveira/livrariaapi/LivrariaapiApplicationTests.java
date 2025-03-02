@@ -40,6 +40,11 @@ class LivrariaapiApplicationTests {
         list.forEach(System.out::println);
     }
 
+    @Test
+    void  addPreco(){
+        repository.setarPreco(29.90F);
+    }
+
 
 
 

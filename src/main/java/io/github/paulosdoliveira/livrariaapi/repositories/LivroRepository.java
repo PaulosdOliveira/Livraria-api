@@ -27,6 +27,10 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     @Query("Update Livro l set l.ativo = false where l.autor.id = :idAutor ")
     void deletarEmCascata(@Param("idAutor") UUID idAutor);
 
+    @Modifying
+    @Transactional
+    @Query("update Livro l set l.preco = :preco")
+    void setarPreco(@Param("preco") Float preco);
 
     default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
 
