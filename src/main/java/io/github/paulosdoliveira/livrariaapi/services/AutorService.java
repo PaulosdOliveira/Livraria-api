@@ -35,7 +35,7 @@ public class AutorService {
 
 
     private String URLBASEFOTO = "http://localhost:8080/autores/foto?id=";
-    private String URLFOTOPADRAO = URLBASEFOTO + "1d80a3d0-e09b-415b-a211-d068bf419620";
+    private String URLFOTOPADRAO = URLBASEFOTO + "80c77721-4266-4ef4-baf0-af7ce766aa7f";
 
     @Transactional
     public void cadastraAutor(AutorDTO dados, MultipartFile arquivo) {
