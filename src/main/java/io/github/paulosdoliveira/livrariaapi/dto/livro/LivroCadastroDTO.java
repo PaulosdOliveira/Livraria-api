@@ -4,7 +4,6 @@ import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -45,6 +44,17 @@ public class LivroCadastroDTO {
         this.preco = preco;
         if(arquivo != null) this.imagem = arquivo.getBytes();
 
+    }
+
+    public LivroCadastroDTO(String titulo, String descricao, String genero, String isbn, LocalDate dataPublicacao, Float preco, UUID idAutor, MultipartFile arquivo) throws IOException {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.genero = GeneroLivro.valueOfString(genero);
+        this.ISBN = isbn;
+        this.dataPublicacao = dataPublicacao;
+        this.idAutor = idAutor;
+        this.preco = preco;
+        if(arquivo != null) this.imagem = arquivo.getBytes();
     }
 
 

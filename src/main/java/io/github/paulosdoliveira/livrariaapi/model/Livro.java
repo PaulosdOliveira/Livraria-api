@@ -67,6 +67,7 @@ public class Livro {
 
 
 
+
     public UUID getId() {
         return id;
     }

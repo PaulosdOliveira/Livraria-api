@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
 import java.time.LocalDate;
+
+import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorOptionDTO;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +26,12 @@ public interface AutorRepository extends JpaRepository<Autor, UUID>, JpaSpecific
 
     @Query("Select a from Autor a where upper(a.nome) like :letra% order by nome")
     List<Autor> buscaLetrada(@Param("letra") String letra);
+
+    @Query("select a.nome from Autor a where a.ativo = true order by nome ")
+    List<String> nomesAutores();
+
+    @Query("select a.id from Autor a where a.ativo = true order by nome")
+    List<UUID> idAutores();
 
     @Transactional
     @Modifying

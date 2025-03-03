@@ -33,7 +33,6 @@ public class Autor {
     private Long livrosVendidos;
 
 
-
     public Autor() {
 
     }
@@ -47,8 +46,6 @@ public class Autor {
     public Autor(String nome) {
         this.nome = nome;
     }
-
-
 
 
     public UUID getId() {
@@ -105,5 +102,12 @@ public class Autor {
 
     public void setLivrosVendidos(Long livrosVendidos) {
         this.livrosVendidos = livrosVendidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + this.nome + "\n" + "Id: " + this.id
+                + "\n" + "Nascimento: " + this.dataNascimento   ;
+
     }
 }

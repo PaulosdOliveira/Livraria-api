@@ -33,7 +33,7 @@ public class LivroController {
     public ResponseEntity cadastrarLivro(
             @RequestParam() String titulo,
             @RequestParam String descricao,
-            @RequestParam GeneroLivro genero,
+            @RequestParam String genero,
             @RequestParam String ISBN,
             @RequestParam LocalDate dataPublicacao,
             @RequestParam Float preco,

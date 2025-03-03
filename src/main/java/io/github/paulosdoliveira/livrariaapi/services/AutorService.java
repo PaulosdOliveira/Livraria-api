@@ -1,6 +1,7 @@
 package io.github.paulosdoliveira.livrariaapi.services;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorDTO;
+import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorOptionDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.AutorMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.model.Foto;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -105,6 +107,19 @@ public class AutorService {
             autor.setUrlFoto(URLBASEFOTO + idNovaFoto);
         }
 
+    }
+
+
+    public List<AutorOptionDTO> criarOptionAutor(){
+        var listaNomes = repository.nomesAutores();
+        var listaId = repository.idAutores();
+        List<AutorOptionDTO> dados = new ArrayList<>();
+        for(int i = 0; i < listaNomes.size(); i++){
+            String nome  = listaNomes.get(i);
+            UUID id = listaId.get(i);
+            dados.add(new AutorOptionDTO(nome, id));
+        }
+        return dados;
     }
 
 }

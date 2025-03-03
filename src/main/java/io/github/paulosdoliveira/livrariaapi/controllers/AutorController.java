@@ -1,6 +1,7 @@
 package io.github.paulosdoliveira.livrariaapi.controllers;
 
 import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorDTO;
+import io.github.paulosdoliveira.livrariaapi.dto.livro.autor.AutorOptionDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Autor;
 import io.github.paulosdoliveira.livrariaapi.services.AutorService;
 import io.github.paulosdoliveira.livrariaapi.services.LivroService;
@@ -61,6 +62,11 @@ public class AutorController {
         return service.buscaLetrada(letra);
     }
 
+    @GetMapping("/nomes")
+    public List<AutorOptionDTO> buscarNomes(){
+        return service.criarOptionAutor();
+    }
+
     @PatchMapping("/{idAutor}")
     public void mudarFoto(
             @RequestParam(required = false) String nome,
@@ -77,6 +83,8 @@ public class AutorController {
         if (deletado) livroService.deletarEmCascata(id);
         return ResponseEntity.noContent().build();
     }
+
+
 
 
 }
