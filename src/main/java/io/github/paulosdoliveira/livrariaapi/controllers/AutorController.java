@@ -28,15 +28,16 @@ public class AutorController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarAutor(
+    public ResponseEntity cadastrarAutor(
             @RequestParam(required = true, value = "nome") String nome,
-            @RequestParam(required = true, value = "breveDescricao") String descricaoBreve,
-            @RequestParam(required = true, value = "dataNascimento") LocalDate dataNascimento,
+            @RequestParam(required = true, value = "breveDescricao") String breveDescricao,
+            @RequestParam(required = true, value = "dataNascimento") String dataString,
             @RequestParam(required = false, value = "arquivo") MultipartFile arquivo
     ) throws IOException {
-        var dto = new AutorDTO(nome, descricaoBreve, dataNascimento);
+        var dataNascimento = LocalDate.parse(dataString);
+        var dto = new AutorDTO(nome, breveDescricao, dataNascimento);
         service.cadastraAutor(dto, arquivo);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping

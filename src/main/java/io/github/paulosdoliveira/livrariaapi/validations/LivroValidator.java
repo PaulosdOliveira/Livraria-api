@@ -33,7 +33,7 @@ public class LivroValidator {
     }
 
     public boolean isbnExiste(Livro livro) {
-        var livroPertensente = repository.findByTitulo(livro.getTitulo());
+        var livroPertensente = repository.findByISBN(livro.getISBN());
         if (livro.getId() == null) {
             return livroPertensente.isPresent();
         }

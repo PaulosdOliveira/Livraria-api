@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +36,12 @@ public class LivroController {
             @RequestParam String descricao,
             @RequestParam String genero,
             @RequestParam String ISBN,
-            @RequestParam LocalDate dataPublicacao,
+            @RequestParam String dataString,
             @RequestParam Float preco,
-            @RequestParam UUID idAutor,
+            @RequestParam String idString,
             @RequestParam MultipartFile arquivo) throws IOException {
+        LocalDate dataPublicacao = LocalDate.parse(dataString.replaceAll("\"" , ""));
+        UUID idAutor = UUID.fromString(idString.replaceAll("\"", ""));
         var dados = new LivroCadastroDTO(titulo, descricao, genero, ISBN, dataPublicacao, preco, idAutor, arquivo);
         service.salvarLivro(dados);
         return ResponseEntity.status(HttpStatus.CREATED).build();
