@@ -19,9 +19,9 @@ public class ComprasController {
     @Autowired
     private ComprasService service;
 
-    @PostMapping("/{idLivro}")
-    public ResponseEntity comprar(@PathVariable UUID idLivro) {
-        service.comprar(idLivro);
+    @PostMapping("/{tituloLivro}")
+    public ResponseEntity comprar(@PathVariable String tituloLivro) {
+        service.comprar(tituloLivro);
         return ResponseEntity.ok().build();
     }
 
@@ -31,5 +31,6 @@ public class ComprasController {
         var livros = service.getLivrosComprados(UUID.fromString(idUsuario));
         return livros;
     }
+
 
 }

@@ -2,6 +2,8 @@ package io.github.paulosdoliveira.livrariaapi.repositories;
 
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,7 +34,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     @Query("update Livro l set l.preco = :preco")
     void setarPreco(@Param("preco") Float preco);
 
-    default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
+    default Page<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
 
         Specification<Livro> specs = isAtivo();
         Sort ordem = Sort.by("vendas").descending();
@@ -54,7 +56,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
             ordem.and(Sort.by("dataPostagem").ascending());
         }
 
-        return findAll(specs, ordem);
+        return findAll(specs, PageRequest.of(0,10));
     }
 
     @Query("Select l.imagem from Livro l where l.id = :idLivro")

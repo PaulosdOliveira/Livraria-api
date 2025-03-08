@@ -70,6 +70,10 @@ public class LivroService {
         return listaDTO;
     }
 
+    public Livro buscarPorTitulo(String titulo){
+        return repository.findByTitulo(titulo).orElse(null);
+    }
+
     public void deletarEmCascata(UUID idAutor) {
         repository.deletarEmCascata(idAutor);
     }

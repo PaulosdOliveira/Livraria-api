@@ -37,10 +37,10 @@ public class ComprasService {
     private AutorRepository autorRepository;
 
     @Transactional
-    public void comprar(UUID idLivro) {
+    public void comprar(String tituloLivro) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         var usuario = usuarioService.findByEmail(email);
-        var livro = livroService.buscarPorId(idLivro);
+        var livro = livroService.buscarPorTitulo(tituloLivro);
         validator.validar(usuario, livro);
         var compra = new Compras(usuario, livro);
         repository.save(compra);
