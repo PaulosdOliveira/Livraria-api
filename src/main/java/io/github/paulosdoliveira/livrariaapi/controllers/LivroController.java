@@ -56,6 +56,11 @@ public class LivroController {
         return service.buscaComFiltro(titulo, genero, ano, false);
     }
 
+    @GetMapping("/sessao-genero")
+    public List<LivroCartaoDTO> buscarSessaoGenero(@RequestParam String genero){
+        return service.buscarSessaoGenero(genero);
+    }
+
     @GetMapping("/foto/{idLivro}")
     public ResponseEntity<byte[]> renderizarImagem(@PathVariable UUID idLivro) {
         var arquivo = service.buscarImagem(idLivro);

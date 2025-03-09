@@ -58,6 +58,7 @@ public class UsuarioService {
     }
 
     public Usuarios buscarPorId(UUID id) {
+        System.out.println("********************************************************");
         return repository.findById(id).orElse(null);
     }
 }

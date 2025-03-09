@@ -54,8 +54,8 @@ public class ComprasService {
 
     public List<LivroCartaoDTO> getLivrosComprados(UUID id) {
         var resultado = repository.getLivrosComprados(id);
-        var lista = resultado.stream().map(livroMapper::toCartao).toList();
-        return lista;
+        //var lista = resultado.stream().map(livroMapper::toCartao).toList();
+        return null;
     }
 
 

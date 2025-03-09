@@ -5,10 +5,12 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
 import io.github.paulosdoliveira.livrariaapi.repositories.LivroRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.LivroValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,6 +21,9 @@ import java.util.UUID;
 @Service
 public class LivroService {
 
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private LivroMapper mapper;
@@ -64,9 +69,19 @@ public class LivroService {
 
     public List<LivroCartaoDTO> buscaComFiltro(String titulo, String genero, Integer ano, boolean maisAntigo) {
         var consulta = repository.buscaFiltrada(titulo, genero, ano, maisAntigo);
-        var listaDTO = consulta.stream().map(mapper::toCartao).toList();
+        String idUsuarioLogado = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        Usuarios usuarioLogado = usuarioService.buscarPorId(UUID.fromString(idUsuarioLogado));
+        var listaDTO = consulta.stream().map( livro -> mapper.toCartao(livro, usuarioLogado)).toList();
         /*Pageable page = PageRequest.of(0, 12);
         Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());*/
+        return listaDTO;
+    }
+
+    public List<LivroCartaoDTO> buscarSessaoGenero(String genero){
+        var consulta = repository.buscarSessaoGenero(genero);
+        String idUsuarioLogado = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        Usuarios usuarioLogado = usuarioService.buscarPorId(UUID.fromString(idUsuarioLogado));
+        var listaDTO = consulta.stream().map( livro -> mapper.toCartao(livro, usuarioLogado)).toList();
         return listaDTO;
     }
 

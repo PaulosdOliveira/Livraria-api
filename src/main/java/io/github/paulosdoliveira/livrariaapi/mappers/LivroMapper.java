@@ -3,6 +3,7 @@ package io.github.paulosdoliveira.livrariaapi.mappers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
 import io.github.paulosdoliveira.livrariaapi.model.compras.ComprasPK;
 import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
 import io.github.paulosdoliveira.livrariaapi.services.ComprasService;
@@ -16,8 +17,7 @@ import java.util.UUID;
 @Component
 public class LivroMapper {
 
-    @Autowired
-    private UsuarioService usuarioService;
+
 
     @Autowired
     private ComprasRepository comprasRepository;
@@ -39,9 +39,7 @@ public class LivroMapper {
         return livro;
     }
 
-    public LivroCartaoDTO toCartao(Livro livro) {
-        String idUsuario = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
-        var usuarioLogado = usuarioService.buscarPorId(UUID.fromString(idUsuario));
+    public LivroCartaoDTO toCartao(Livro livro, Usuarios UsuarioLogado) {
         var cartaoDTO = new LivroCartaoDTO();
         cartaoDTO.setTitulo(livro.getTitulo());
         cartaoDTO.setDescricao(livro.getDescricao());
@@ -51,7 +49,7 @@ public class LivroMapper {
         cartaoDTO.setDataPublicacao(livro.getDataPublicacao());
         cartaoDTO.setVendas(livro.getVendas());
         cartaoDTO.setUrlImagem(URLBase + livro.getId());
-        cartaoDTO.setComprado(comprasRepository.existsById(new ComprasPK(usuarioLogado, livro)));
+        cartaoDTO.setComprado(comprasRepository.existsById(new ComprasPK(UsuarioLogado, livro)));
         return cartaoDTO;
     }
 }

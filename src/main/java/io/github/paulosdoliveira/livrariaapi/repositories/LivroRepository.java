@@ -34,7 +34,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     @Query("update Livro l set l.preco = :preco")
     void setarPreco(@Param("preco") Float preco);
 
-    default Page<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
+
+    default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
 
         Specification<Livro> specs = isAtivo();
         Sort ordem = Sort.by("vendas").descending();
@@ -56,7 +57,14 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
             ordem.and(Sort.by("dataPostagem").ascending());
         }
 
-        return findAll(specs, PageRequest.of(0,10));
+        return findAll(specs, ordem);
+    }
+
+    /*  Consulta para preencher a sessão de generos  */
+    default Page<Livro> buscarSessaoGenero(String genero){
+        var generoLivro = GeneroLivro.valueOfString(genero);
+        Specification<Livro> specs = generoIqual(generoLivro);
+        return findAll(specs, PageRequest.of(0, 10));
     }
 
     @Query("Select l.imagem from Livro l where l.id = :idLivro")
