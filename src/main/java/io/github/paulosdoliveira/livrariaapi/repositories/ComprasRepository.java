@@ -14,4 +14,5 @@ public interface ComprasRepository extends JpaRepository<Compras, ComprasPK> {
 
     @Query("Select c.id.livro from Compras c where c.id.usuario.id = :idUsuario  ")
     List<Livro> getLivrosComprados(@Param("idUsuario") UUID id);
+
 }

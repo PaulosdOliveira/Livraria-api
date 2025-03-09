@@ -3,12 +3,27 @@ package io.github.paulosdoliveira.livrariaapi.mappers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.compras.ComprasPK;
+import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
+import io.github.paulosdoliveira.livrariaapi.services.ComprasService;
+import io.github.paulosdoliveira.livrariaapi.services.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class LivroMapper {
 
-    private  String URLBase = "http://localhost:8080/livros/foto/";
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private ComprasRepository comprasRepository;
+
+    private String URLBase = "http://localhost:8080/livros/foto/";
+
 
     public Livro toEntity(LivroCadastroDTO dto) {
         var livro = new Livro();
@@ -25,15 +40,18 @@ public class LivroMapper {
     }
 
     public LivroCartaoDTO toCartao(Livro livro) {
+        String idUsuario = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        var usuarioLogado = usuarioService.buscarPorId(UUID.fromString(idUsuario));
         var cartaoDTO = new LivroCartaoDTO();
         cartaoDTO.setTitulo(livro.getTitulo());
         cartaoDTO.setDescricao(livro.getDescricao());
         cartaoDTO.setGenero(livro.getGenero());
-        cartaoDTO.setPreco(String.format("%.2f",livro.getPreco()).replace(".",",") + "$");
+        cartaoDTO.setPreco(String.format("%.2f", livro.getPreco()).replace(".", ",") + "$");
         cartaoDTO.setNomeAutor(livro.getAutor().getNome());
         cartaoDTO.setDataPublicacao(livro.getDataPublicacao());
         cartaoDTO.setVendas(livro.getVendas());
         cartaoDTO.setUrlImagem(URLBase + livro.getId());
+        cartaoDTO.setComprado(comprasRepository.existsById(new ComprasPK(usuarioLogado, livro)));
         return cartaoDTO;
     }
 }

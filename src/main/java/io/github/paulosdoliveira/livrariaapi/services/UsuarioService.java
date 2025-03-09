@@ -4,17 +4,14 @@ import io.github.paulosdoliveira.livrariaapi.dto.livro.usuario.CadastroUsuarioDT
 import io.github.paulosdoliveira.livrariaapi.dto.livro.usuario.LoginUsuariDTO;
 import io.github.paulosdoliveira.livrariaapi.jwt.JwtService;
 import io.github.paulosdoliveira.livrariaapi.mappers.UsuarioMapper;
-import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
 import io.github.paulosdoliveira.livrariaapi.model.token.AccessToken;
-import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
 import io.github.paulosdoliveira.livrariaapi.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,7 +53,7 @@ public class UsuarioService {
         return repository.existsByEmail(email);
     }
 
-    public Usuarios findByEmail(String email) {
+    public  Usuarios findByEmail(String email) {
         return repository.findByEmail(email);
     }
 

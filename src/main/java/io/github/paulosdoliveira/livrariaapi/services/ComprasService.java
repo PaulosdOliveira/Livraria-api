@@ -3,7 +3,10 @@ package io.github.paulosdoliveira.livrariaapi.services;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.compras.ComprasDTO;
 import io.github.paulosdoliveira.livrariaapi.mappers.LivroMapper;
+import io.github.paulosdoliveira.livrariaapi.model.Livro;
+import io.github.paulosdoliveira.livrariaapi.model.Usuarios;
 import io.github.paulosdoliveira.livrariaapi.model.compras.Compras;
+import io.github.paulosdoliveira.livrariaapi.model.compras.ComprasPK;
 import io.github.paulosdoliveira.livrariaapi.repositories.AutorRepository;
 import io.github.paulosdoliveira.livrariaapi.repositories.ComprasRepository;
 import io.github.paulosdoliveira.livrariaapi.validations.CompraValidator;
@@ -53,5 +56,11 @@ public class ComprasService {
         var resultado = repository.getLivrosComprados(id);
         var lista = resultado.stream().map(livroMapper::toCartao).toList();
         return lista;
+    }
+
+
+    public boolean livroJaComprado(Usuarios usuarioLogado, Livro livro){
+        var compraRegistrada = new ComprasPK(usuarioLogado, livro);
+        return repository.existsById(compraRegistrada);
     }
 }

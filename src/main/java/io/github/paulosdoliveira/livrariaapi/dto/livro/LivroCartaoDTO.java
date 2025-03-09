@@ -13,10 +13,19 @@ public class LivroCartaoDTO {
     private String nomeAutor;
     private Long vendas;
     private String urlImagem;
+    private boolean comprado;
 
 
     public LivroCartaoDTO() {
 
+    }
+
+    public boolean isComprado() {
+        return comprado;
+    }
+
+    public void setComprado(boolean comprado) {
+        this.comprado = comprado;
     }
 
     public String getTitulo() {
@@ -83,3 +92,4 @@ public class LivroCartaoDTO {
         this.urlImagem = urlImagem;
     }
 }
+

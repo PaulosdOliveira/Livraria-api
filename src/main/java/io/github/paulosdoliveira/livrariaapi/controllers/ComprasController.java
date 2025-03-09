@@ -27,7 +27,7 @@ public class ComprasController {
 
     @GetMapping()
     public List<LivroCartaoDTO>  getLivrosComprados() {
-        String idUsuario = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        String idUsuario = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
         var livros = service.getLivrosComprados(UUID.fromString(idUsuario));
         return livros;
     }
