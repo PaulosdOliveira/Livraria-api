@@ -3,6 +3,7 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
+import io.github.paulosdoliveira.livrariaapi.dto.livro.PageLivroDTO;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import io.github.paulosdoliveira.livrariaapi.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<LivroCartaoDTO> buscarPorTitulo(
+    public PageLivroDTO buscarPorTitulo(
             @RequestParam(name = "titulo", required = false) String titulo,
             @RequestParam(name = "genero", required = false) String genero,
             @RequestParam(name = "ano", required = false) Integer ano,
