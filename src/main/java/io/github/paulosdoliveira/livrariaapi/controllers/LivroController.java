@@ -3,14 +3,9 @@ package io.github.paulosdoliveira.livrariaapi.controllers;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCadastroDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroCartaoDTO;
 import io.github.paulosdoliveira.livrariaapi.dto.livro.LivroNovosDadosDTO;
-import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
 import io.github.paulosdoliveira.livrariaapi.services.LivroService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +46,10 @@ public class LivroController {
     public List<LivroCartaoDTO> buscarPorTitulo(
             @RequestParam(name = "titulo", required = false) String titulo,
             @RequestParam(name = "genero", required = false) String genero,
-            @RequestParam(name = "ano", required = false) Integer ano
+            @RequestParam(name = "ano", required = false) Integer ano,
+            @RequestParam(name = "numero-pagina" ) int numPagina
     ) {
-        return service.buscaComFiltro(titulo, genero, ano, false);
+        return service.buscaComFiltro(titulo, genero, ano, false, numPagina);
     }
 
     @GetMapping("/sessao-genero")

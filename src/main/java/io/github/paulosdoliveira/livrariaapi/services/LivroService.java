@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +50,6 @@ public class LivroService {
             var livro = possivelLivro.get();
             livro.setAtivo(false);
         }
-
     }
 
     @Transactional
@@ -67,14 +66,21 @@ public class LivroService {
         if (autor != null) livro.setAutor(autor);
     }
 
-    public List<LivroCartaoDTO> buscaComFiltro(String titulo, String genero, Integer ano, boolean maisAntigo) {
-        var consulta = repository.buscaFiltrada(titulo, genero, ano, maisAntigo);
+    public List<LivroCartaoDTO> buscaComFiltro(String titulo, String genero, Integer ano, boolean maisAntigo, int numPagina) {
+        var consulta = repository.buscaFiltrada(titulo, genero, ano, maisAntigo, numPagina);
         String idUsuarioLogado = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
         Usuarios usuarioLogado = usuarioService.buscarPorId(UUID.fromString(idUsuarioLogado));
         var listaDTO = consulta.stream().map( livro -> mapper.toCartao(livro, usuarioLogado)).toList();
-        /*Pageable page = PageRequest.of(0, 12);
-        Page<LivroCartaoDTO> pagina = new PageImpl<>(listaDTO, page, listaDTO.size());*/
-        return listaDTO;
+
+        //Lista final
+        List<LivroCartaoDTO> listaFinal  = new ArrayList<>();
+        int inicio = numPagina * 15;
+        int meta = (numPagina +  1 ) * 15;
+        for(int i = inicio; i < meta && i < listaDTO.size(); i ++){
+            System.out.println(i);
+            listaFinal.add(listaDTO.get(i));
+        }
+        return listaFinal;
     }
 
     public List<LivroCartaoDTO> buscarSessaoGenero(String genero){

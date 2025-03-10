@@ -2,9 +2,7 @@ package io.github.paulosdoliveira.livrariaapi.repositories;
 
 import io.github.paulosdoliveira.livrariaapi.model.Livro;
 import io.github.paulosdoliveira.livrariaapi.model.enums.GeneroLivro;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,12 +14,14 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import static io.github.paulosdoliveira.livrariaapi.repositories.specification.LivroSpecs.*;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
 
 
     Optional<Livro> findByTitulo(String titulo);
+
     Optional<Livro> findByISBN(String isbn);
 
     @Transactional
@@ -35,13 +35,12 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     void setarPreco(@Param("preco") Float preco);
 
 
-    default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo) {
+    default List<Livro> buscaFiltrada(String titulo, String genero, Integer ano, boolean maisAntigo, int numPagina) {
 
         Specification<Livro> specs = isAtivo();
         Sort ordem = Sort.by("vendas").descending();
         GeneroLivro generoEnum = GeneroLivro.valueOfString(genero);
         System.out.println(generoEnum);
-
         if (StringUtils.hasText(titulo)) {
             specs = specs.and(tituloLike(titulo));
         }
@@ -56,12 +55,11 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
         } else {
             ordem.and(Sort.by("dataPostagem").ascending());
         }
-
         return findAll(specs, ordem);
     }
 
     /*  Consulta para preencher a sessão de generos  */
-    default Page<Livro> buscarSessaoGenero(String genero){
+    default Page<Livro> buscarSessaoGenero(String genero) {
         var generoLivro = GeneroLivro.valueOfString(genero);
         Specification<Livro> specs = generoIqual(generoLivro);
         return findAll(specs, PageRequest.of(0, 10));
